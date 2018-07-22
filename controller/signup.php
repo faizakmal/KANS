@@ -34,9 +34,9 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 			}else{
 				//hashing password
 				if($password==$rePassword){
-					$hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+					$pass = md5($password); // password encrypt
 					//insert ke database
-					$sql = "INSERT INTO user (email, password, name, angkatan) VALUES ('$email', '$password', '$nama', '$angkatan');";
+					$sql = "INSERT INTO user (email, password, name, angkatan) VALUES ('$email', '$pass', '$nama', '$angkatan');";
 					$sql1 = "INSERT INTO datadiri_alumni (email, nama, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$email', '$nama', '', '', '$angkatan', '', '');";
 					$sql2 = "INSERT INTO pekerjaan_alumni (email, namaPerusahaan, jenisPerusahaan) VALUES ('$email', '', '');";
 					$sql3 = "INSERT INTO pendidikan_alumni (email, universitas, fakultas, jurusan, tahunMasuk) VALUES ('$email', '', '', '', '');";

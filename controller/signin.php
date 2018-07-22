@@ -6,7 +6,7 @@ include '../database/connect.php';
 
 $password = mysqli_real_escape_string($conn, $_POST['form-password']);
 $email    = mysqli_real_escape_string($conn, $_POST['form-email']);
-
+$pass 	  = md5($password); //password decrypt
 //check data login kosong
 if(empty($email)||empty($password)){
 	echo "<script>alert('Error!!, Please Input Username and Password'); window.location.href='../index.php'</script>";
@@ -22,7 +22,7 @@ if(empty($email)||empty($password)){
 	}else{
 		if($row =  mysqli_fetch_assoc($result)){
 			//check password
-			if($password != $row['password']){
+			if($pass != $row['password']){
 				echo "<script>alert('Email and Password Invalid'); window.location.href='../index.php'</script>";
 				exit();
 			}else{
