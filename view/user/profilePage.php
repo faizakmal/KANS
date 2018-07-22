@@ -89,7 +89,7 @@ include '../../controller/user/profile.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../img/ketua.png" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/ketua.png" alt="User profile picture">
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
