@@ -80,8 +80,8 @@ include '../../controller/user/detail.php';
       <h1>Profil<small>Alumni</small></h1>
       <ol class="breadcrumb">
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> Cari Alumni</a></li>
-        <li><i class="fa fa-archive"></i> Profile</a></li>
+        <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> Cari Alumni</a></li>
+        <li class="active"><i class="fa fa-book"></i> <?php echo $name; ?></a></li>
       </ol>
     </section>
     <section class="content">
