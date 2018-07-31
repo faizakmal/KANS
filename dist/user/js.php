@@ -21,7 +21,7 @@ function checkLogout(){
     return confirm('Apakah data yang diinputkan sudah benar?');
 }
 function OnFocusInput (input) {
-    document.getElementById("demo").innerHTML = "*Tambahkan Alamat Lengkap Anda";
+    document.getElementById("demo").innerHTML = "*Input nama jalan lalu lengkapi dengan alamat tinggal anda";
 }
 function OnBlurInput (input) {
      document.getElementById("demo").innerHTML = "";
