@@ -5,13 +5,11 @@ include '../../database/connect.php';
 $email   		 =  $_POST['inputEmail'];
 $nama 	 		 =  $_POST['inputNama'];
 $alamat   		 =  $_POST['inputAlamat'];
-$plusalamat      =  $_POST['inputDetailAlamat'];
 $noHP 	   		 =  $_POST['inputNoHP'];
 $angkatan  		 =  $_POST['inputAngkatan'];
 $lulusan  		 =  $_POST['inputLulusan'];
 $pekerjaan		 =  $_POST['inputPekerjaan'];
 
-$alamat = $plusalamat.', '.$alamat;
 
 $sql = "UPDATE datadiri_alumni
 			SET nama = '$nama', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan' 

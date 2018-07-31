@@ -159,16 +159,10 @@ include '../../controller/user/profile.php';
                     <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
+                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  onfocus="OnFocusInput(this)" onblur="OnBlurInput(this)" value= "<?php echo $alamat; ?>" >
+                      <p id="demo" style="color:red";></p>
                     </div>
                   </div>
-					<div class="form-group">
-						<label for="inputAlamat" class="col-sm-2 control-label">Detail Alamat</label>
-						
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="inputDetailAlamat" placeholder="Detail Alamat (Jalan, Blok dan No Rumah)"  value= "<?php echo $detailalamat; ?>" >
-						</div>
-					</div>
                   <div class="form-group">
                     <label for="inputNoHP" class="col-sm-2 control-label">Nomor HP</label>
 
