@@ -4,7 +4,7 @@
   <title>KANS NFBS</title>
   <link href='dist/img/icon.png' rel='shortcut icon'>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width" initial-scale="1.0" maximum-scale="1.0">
   <?php 
 	include 'dist/index/css/style.php';
   ?>	
