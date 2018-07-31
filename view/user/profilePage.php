@@ -20,7 +20,7 @@ include '../../controller/user/profile.php';
   <header class="main-header">
     <a href="homePage.php" class="logo">
       <span class="logo-mini"><b>NF</b></span>
-      <span class="logo-lg"><img src="../../dist/img/btnhome.png" class="img-circle" alt="Home" style="margin-right: 10px;"><b>KANS NFBS</b></span>
+      <span class="logo-lg"><b>KANS NFBS</b></span>
     </a>
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -159,7 +159,8 @@ include '../../controller/user/profile.php';
                     <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
+                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  onfocus="OnFocusInput(this)" onblur="OnBlurInput(this)" value= "<?php echo $alamat; ?>" >
+                      <p id="demo" style="color:red";></p>
                     </div>
                   </div>
                   <div class="form-group">
