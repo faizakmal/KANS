@@ -20,6 +20,12 @@ function checkLogout(){
  function checkInput(){
     return confirm('Apakah data yang diinputkan sudah benar?');
 }
+function OnFocusInput (input) {
+    document.getElementById("demo").innerHTML = "*Tambahkan Alamat Lengkap Anda";
+}
+function OnBlurInput (input) {
+     document.getElementById("demo").innerHTML = "";
+}
 
   $(function () {
     $('#example1').DataTable()
