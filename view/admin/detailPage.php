@@ -67,7 +67,8 @@ include '../../controller/admin/detail.php';
       <h1>Daftar<small>Alumni</small></h1>
       <ol class="breadcrumb">
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active"><i class="fa fa-search"></i> Daftar Alumni</a></li>
+        <li><a href="dataPage.php"><i class="fa fa-search"></i> Daftar Alumni</a></li>
+        <li class="active"><i class="fa fa-book"></i> <?php echo $name; ?></a></li>
       </ol>
     </section>
     <section class="content">
