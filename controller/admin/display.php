@@ -19,4 +19,3 @@ echo "
     </tr>   
                   ";    
                   }  
-include "../../dist/admin/js.php";
