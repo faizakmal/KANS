@@ -20,7 +20,7 @@ include '../../controller/user/detail.php';
   <header class="main-header">
     <a href="homePage.php" class="logo">
       <span class="logo-mini"><b>NF</b></span>
-      <span class="logo-lg"><b>KANS NFBS</b></span>
+      <span class="logo-lg"><img src="../../dist/img/btnhome.png" class="img-circle" alt="Home" style="margin-right: 10px;"><b>KANS NFBS</b></span>
     </a>
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -79,8 +79,8 @@ include '../../controller/user/detail.php';
     <section class="content-header">
       <h1>Profil<small>Alumni</small></h1>
       <ol class="breadcrumb">
-        <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active"><a href="cariAlumni.php"><i class="fa fa-search"></i> Cari Alumni</a></li>
+        <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> Cari Alumni</a></li>
         <li><i class="fa fa-archive"></i> Profile</a></li>
       </ol>
     </section>
