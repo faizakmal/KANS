@@ -82,6 +82,7 @@ session_start();
           </div>
         </div>
         <div class="box-body">
+          <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -97,7 +98,7 @@ session_start();
                     include '../../controller/admin/display.php';
                 ?>
               </table>
-
+          </div>
         </div>
         <div class="box-footer">
         </div>
