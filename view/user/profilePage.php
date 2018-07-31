@@ -159,7 +159,7 @@ include '../../controller/user/profile.php';
                     <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputAlamat" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
+                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
                     </div>
                   </div>
                   <div class="form-group">
@@ -321,7 +321,7 @@ include '../../controller/user/profile.php';
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
     <?php 
-    include "../../dist/admin/js.php"
+    include "../../dist/user/js.php"
      ?>
 </body>
 </html>
