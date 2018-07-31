@@ -9,7 +9,10 @@
 <script src="../../dist/adminlte/adminlte/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="../../dist/adminlte/js/adminlte.min.js"></script>
 <script src="../../dist/adminlte/js/demo.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en&key=AIzaSyAc9pBfRDe2elx10Tm4wmsYhoBgTKjmG9k"></script>
 <script>
+var input = document.getElementById('autocomplete');
+var autocomplete = new google.maps.places.Autocomplete(input);
 
 function checkLogout(){
     return confirm('Yakin Mau Logout?');
