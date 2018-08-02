@@ -37,7 +37,7 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 					$pass = md5($password); // password encrypt
 					
 					
-					$nopic = '../dist/userpicture/silueta.png';
+					$nopic = '../dist/userpicture/defaultpic/silueta.png';
 					$picforuser = '../dist/userpicture/'.$email.'.png';
 					$emailpic = $email.".png";
 					copy($nopic, $picforuser);
