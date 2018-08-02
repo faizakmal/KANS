@@ -20,7 +20,7 @@ include '../../controller/admin/detail.php';
   <header class="main-header">
     <a href="dashboardPage.php" class="logo">
       <span class="logo-mini"><b>NF</b></span>
-      <span class="logo-lg"><b>KANS NFBS</b></span>
+      <span class="logo-lg"><img src="../../dist/img/btnhome.png" class="img-circle" alt="Home" style="margin-right: 10px;"><b>KANS NFBS</b></span>
     </a>
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -67,7 +67,8 @@ include '../../controller/admin/detail.php';
       <h1>Daftar<small>Alumni</small></h1>
       <ol class="breadcrumb">
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active"><i class="fa fa-search"></i> Daftar Alumni</a></li>
+        <li><a href="dataPage.php"><i class="fa fa-search"></i> Daftar Alumni</a></li>
+        <li class="active"><i class="fa fa-book"></i> <?php echo $name; ?></a></li>
       </ol>
     </section>
     <section class="content">
