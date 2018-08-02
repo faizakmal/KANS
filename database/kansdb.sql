@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 21, 2018 at 02:03 AM
--- Server version: 10.1.21-MariaDB
+-- Host: localhost
+-- Generation Time: Aug 02, 2018 at 03:48 AM
+-- Server version: 5.7.17-log
 -- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `datadiri_alumni` (
   `email` varchar(30) CHARACTER SET utf8 NOT NULL,
   `nama` varchar(50) NOT NULL,
+  `image` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `noHP` varchar(12) NOT NULL,
   `angkatan` varchar(2) NOT NULL,
@@ -40,9 +41,9 @@ CREATE TABLE `datadiri_alumni` (
 -- Dumping data for table `datadiri_alumni`
 --
 
-INSERT INTO `datadiri_alumni` (`email`, `nama`, `alamat`, `noHP`, `angkatan`, `lulusan`, `pekerjaan`) VALUES
-('faiz@gmail.com', 'Faiz', 'Jaktim, Indonesia', '081222111111', '9', 'SMA', 'Pelajar'),
-('husni@gmail.com', 'Husni Mubarok Alghifary', 'Serang, Indonesia', '9120129120', '8', 'SMA', 'Mahasiswa');
+INSERT INTO `datadiri_alumni` (`email`, `nama`, `image`, `alamat`, `noHP`, `angkatan`, `lulusan`, `pekerjaan`) VALUES
+('husni@gmail.com', 'Husni Mubarok Al Ghifari', 'silueta.png', 'Gg. Makam D 14, Keputih, Surabaya City, East Java, Indonesia', '082298664546', '10', 'SMP-SMA', 'Mahasisa'),
+('husnimubarok@gmail.com', 'Muni', 'husnimubarok@gmail.com.png', '', '', '10', '', '');
 
 -- --------------------------------------------------------
 
@@ -61,8 +62,8 @@ CREATE TABLE `pekerjaan_alumni` (
 --
 
 INSERT INTO `pekerjaan_alumni` (`email`, `namaPerusahaan`, `jenisPerusahaan`) VALUES
-('faiz@gmail.com', 'TOYOTA', 'Bisnis'),
-('husni@gmail.com', 'TOYOTA', 'Swasta');
+('husni@gmail.com', 'WISMA DOLLY', 'Bisnis'),
+('husnimubarok@gmail.com', '', '');
 
 -- --------------------------------------------------------
 
@@ -83,8 +84,8 @@ CREATE TABLE `pendidikan_alumni` (
 --
 
 INSERT INTO `pendidikan_alumni` (`email`, `universitas`, `fakultas`, `jurusan`, `tahunMasuk`) VALUES
-('faiz@gmail.com', 'UNAIR', 'Ilmu Komputer', 'Teknik Mesin', 2013),
-('husni@gmail.com', 'ITATS', 'Kedokteran', 'Dokter gigi', 2013);
+('husni@gmail.com', 'ITS', 'FTE', 'TEKNIK KOMPUTER', 2014),
+('husnimubarok@gmail.com', '', '', '', 0000);
 
 -- --------------------------------------------------------
 
@@ -104,9 +105,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`email`, `password`, `name`, `angkatan`) VALUES
-('admin@admin.com', '111', 'admin', ''),
-('faiz@gmail.com', '123', 'faiz', '9'),
-('husni@gmail.com', '123', 'husni', '9');
+('admin@admin.com', '698d51a19d8a121ce581499d7b701668', 'admin', '613'),
+('husni@gmail.com', '202cb962ac59075b964b07152d234b70', 'Husni', '10'),
+('husnimubarok@gmail.com', '202cb962ac59075b964b07152d234b70', 'Muni', '100');
 
 --
 -- Indexes for dumped tables
