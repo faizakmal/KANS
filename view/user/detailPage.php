@@ -32,23 +32,9 @@ include '../../controller/user/detail.php';
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="profilePage.php">
               <span class="hidden-xs">Welcome, <?php echo $_SESSION['name']; ?></span>
             </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="../../dist/userpicture/<?php echo $_SESSION['email'].".png"?>" class="img-circle" alt="User Image">
-                <p>
-                  <?php echo $_SESSION['email']; ?>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-right">
-                  <a href="../../controller/logout.php" class="btn btn-default btn-flat" onclick='return checkLogout()'>Logout</a>
-                </div>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>
@@ -72,6 +58,8 @@ include '../../controller/user/detail.php';
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
+        <li class="header">SETTINGS</li>
+        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -90,7 +78,7 @@ include '../../controller/user/detail.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image; ?>" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image; ?>" alt="User profile picture" style = "width: 100px; height: 100px;">
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
@@ -98,7 +86,7 @@ include '../../controller/user/detail.php';
                   <b>Nama</b> <a class="pull-right"><?php echo $name; ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Alamat Email</b> <a class="pull-right"><?php echo $email; ?></a>
+                  <b>Email</b> <a class="pull-right"><?php echo $email; ?></a>
                 </li>
                 <li class="list-group-item">
                   <b>Angkatan</b> <a class="pull-right"><?php echo $angkatan; ?> <?php echo $lulusan; ?></a>

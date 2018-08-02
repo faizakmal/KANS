@@ -32,23 +32,9 @@ include '../../controller/user/profile.php';
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="profilePage.php">
               <span class="hidden-xs">Welcome, <?php echo $name; ?></span>
             </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="../../dist/userpicture/<?php echo $image?>" class="img-circle" alt="User Image">
-                <p>
-                  <?php echo $_SESSION['email']; ?>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-right">
-                  <a href="../../controller/logout.php" class="btn btn-default btn-flat" onclick='return checkLogout()'>Logout</a>
-                </div>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>
@@ -72,6 +58,8 @@ include '../../controller/user/profile.php';
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li class="active"><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
+        <li class="header">SETTINGS</li>
+        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -89,7 +77,7 @@ include '../../controller/user/profile.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image?>" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image?>" alt="User profile picture" style = "width: 100px; height: 100px;" >
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
@@ -97,7 +85,7 @@ include '../../controller/user/profile.php';
                   <b>Nama</b> <a class="pull-right"><?php echo $name; ?></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Alamat Email</b> <a class="pull-right"><?php echo $email; ?></a>
+                  <b>Email</b> <a class="pull-right"><?php echo $email; ?></a>
                 </li>
                 <li class="list-group-item">
                   <b>Angkatan</b> <a class="pull-right"><?php echo $angkatan; ?> <?php echo $lulusan; ?></a>
@@ -148,13 +136,7 @@ include '../../controller/user/profile.php';
                       <input type="hidden" class="form-control" name="inputEmail" value= "<?php echo $email; ?>" >
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="photo" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                     <img src="../../dist/userpicture/<?php echo $image?>" class="img-bordered" alt="User Image" width="150" height="165" style="margin-bottom: 10px">
-                      <input type="file" name="imageupload">                   
-                    </div>
-                  </div>
+                
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
@@ -204,6 +186,13 @@ include '../../controller/user/profile.php';
                       <input type="text" class="form-control" name="inputPekerjaan" placeholder="Pekerjaan" value= "<?php echo $pekerjaan; ?>" >
                     </div>
                   </div>
+                    <div class="form-group">
+                    <label for="photo" class="col-sm-2 control-label">Upload Foto Profile</label>
+                    <div class="col-sm-10">
+                       <input type="file" name="imageupload">
+                      
+                      </div>                
+                    </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success" onclick='return checkInput()'>Submit</button>

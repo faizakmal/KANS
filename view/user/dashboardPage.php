@@ -31,23 +31,9 @@ session_start();
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="profilePage.php">
               <span class="hidden-xs">Welcome, <?php echo $_SESSION['name']; ?></span>
             </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="../../dist/userpicture/<?php echo $_SESSION['email'].".png"?>" class="img-circle" alt="User Image">
-                <p>
-                  <?php echo $_SESSION['email']; ?>
-                </p>
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-right">
-                  <a href="../../controller/logout.php" class="btn btn-default btn-flat" onclick='return checkLogout()'>Logout</a>
-                </div>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>
@@ -71,6 +57,8 @@ session_start();
         <li class="active"><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
+        <li class="header">SETTINGS</li>
+        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
