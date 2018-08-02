@@ -29,7 +29,7 @@ $sql = "UPDATE datadiri_alumni
 if (move_uploaded_file($_FILES['imageupload']['tmp_name'], $target)) {
 	$msg = "";
 	echo $msg;
-	chmod("../../dist/userpicture/".$newname, 0777);
+	chmod("../../dist/userpicture/".$newname."/", 0777);
 }else{
 	$msg = "Failed to upload image";
 	echo $msg;
