@@ -37,7 +37,7 @@ include '../../controller/user/detail.php';
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
-                <img src="../../dist/img/ketua.png" class="img-circle" alt="User Image">
+                <img src="../../dist/userpicture/<?php echo $_SESSION['email'].".png"?>" class="img-circle" alt="User Image">
                 <p>
                   <?php echo $_SESSION['email']; ?>
                 </p>
@@ -60,7 +60,7 @@ include '../../controller/user/detail.php';
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/img/ketua.png" style="width:70px" class="img-circle" alt="User Image">
+          <img src="../../dist/userpicture/<?php echo $_SESSION['email'].".png"?>" style="width:38px; height: 38px;" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo $_SESSION['name']; ?></p>
@@ -90,7 +90,7 @@ include '../../controller/user/detail.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/ketua.png" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image; ?>" alt="User profile picture">
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
