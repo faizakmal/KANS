@@ -6,7 +6,7 @@ $email = $_SESSION['email'];
 	$sql = "SELECT 
 				datadiri_alumni.email, datadiri_alumni.nama, datadiri_alumni.alamat, datadiri_alumni.noHP, datadiri_alumni.angkatan, datadiri_alumni.lulusan, datadiri_alumni.pekerjaan, 
 				pendidikan_alumni.universitas, pendidikan_alumni.fakultas, pendidikan_alumni.jurusan, pendidikan_alumni.tahunMasuk,
-				pekerjaan_alumni.namaPerusahaan, pekerjaan_alumni.jenisPerusahaan
+				pekerjaan_alumni.namaPerusahaan, pekerjaan_alumni.jenisPerusahaan, datadiri_alumni.image
 			FROM user, datadiri_alumni, pendidikan_alumni, pekerjaan_alumni 
 			where 
 			datadiri_alumni.email = user.email AND 
@@ -29,6 +29,7 @@ $email = $_SESSION['email'];
 		$tahunMasuk = $data[10]; 
 		$namaPerusahaan = $data[11]; 
 		$jenisPerusahaan = $data[12];
+		$image = $data[13];
 	}
 
 	else {

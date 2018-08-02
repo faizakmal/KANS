@@ -35,9 +35,16 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 				//hashing password
 				if($password==$rePassword){
 					$pass = md5($password); // password encrypt
+					
+					
+					$nopic = '../dist/userpicture/silueta.png';
+					$picforuser = '../dist/userpicture/'.$email.'.png';
+					$emailpic = $email.".png";
+					copy($nopic, $picforuser);
+					
 					//insert ke database
 					$sql = "INSERT INTO user (email, password, name, angkatan) VALUES ('$email', '$pass', '$nama', '$angkatan');";
-					$sql1 = "INSERT INTO datadiri_alumni (email, nama, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$email', '$nama', '', '', '$angkatan', '', '');";
+					$sql1 = "INSERT INTO datadiri_alumni (email, nama, image, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$email', '$nama', '$emailpic', '', '', '$angkatan', '', '');";
 					$sql2 = "INSERT INTO pekerjaan_alumni (email, namaPerusahaan, jenisPerusahaan) VALUES ('$email', '', '');";
 					$sql3 = "INSERT INTO pendidikan_alumni (email, universitas, fakultas, jurusan, tahunMasuk) VALUES ('$email', '', '', '', '');";
 

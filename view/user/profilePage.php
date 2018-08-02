@@ -37,7 +37,7 @@ include '../../controller/user/profile.php';
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
-                <img src="../../dist/img/ketua.png" class="img-circle" alt="User Image">
+                <img src="../../dist/userpicture/<?php echo $image?>" class="img-circle" alt="User Image">
                 <p>
                   <?php echo $_SESSION['email']; ?>
                 </p>
@@ -60,7 +60,7 @@ include '../../controller/user/profile.php';
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/img/ketua.png" style="width:70px" class="img-circle" alt="User Image">
+          <img src="../../dist/userpicture/<?php echo $image?>" style="width: 38px; height: 38px;" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo $name; ?></p>
@@ -89,7 +89,7 @@ include '../../controller/user/profile.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/ketua.png" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image?>" alt="User profile picture">
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
@@ -142,10 +142,17 @@ include '../../controller/user/profile.php';
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
-                <form class="form-horizontal" method="POST" action="../../controller/user/editDatadiri.php">
+                <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="../../controller/user/editDatadiri.php">
                   <div class="form-group">
                     <div class="col-sm-10">
                       <input type="hidden" class="form-control" name="inputEmail" value= "<?php echo $email; ?>" >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="photo" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                     <img src="../../dist/userpicture/<?php echo $image?>" class="img-bordered" alt="User Image" width="150" height="165" style="margin-bottom: 10px">
+                      <input type="file" name="imageupload">                   
                     </div>
                   </div>
                   <div class="form-group">
