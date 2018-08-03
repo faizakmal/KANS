@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['name'])){
+    header('Location:../../index.html');
+  }
 ?>
 <!DOCTYPE html>
 <html>
