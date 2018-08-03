@@ -148,19 +148,6 @@ include '../../controller/admin/detail.php';
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="photo" class="col-sm-2 control-label">Upload Foto Profile</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <span class="input-group-btn">
-                          <span class="btn btn-default btn-file">
-                            Browse <input type="file" name="imageupload">
-                          </span>
-                        </span>
-                        <input type="text" class="form-control" readonly>
-                      </div>                
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success" onclick='return checkInput()'>Submit</button>
                     </div>
