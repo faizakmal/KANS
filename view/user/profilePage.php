@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['name'])){
+    header('Location:../../index.html');
+  }
 include '../../controller/user/profile.php';
 ?>
 <!DOCTYPE html>

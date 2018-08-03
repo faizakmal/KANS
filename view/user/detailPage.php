@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['name'])){
+    header('Location:../../index.html');
+  }
 include '../../controller/user/detail.php';
 ?>
 <!DOCTYPE html>
@@ -74,7 +77,7 @@ include '../../controller/user/detail.php';
     </section>
     <section class="content">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -121,7 +124,7 @@ include '../../controller/user/detail.php';
           </div>
           <!-- /.box -->
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
