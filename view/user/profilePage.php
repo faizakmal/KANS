@@ -73,7 +73,7 @@ include '../../controller/user/profile.php';
     </section>
     <section class="content">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -120,7 +120,7 @@ include '../../controller/user/profile.php';
           </div>
           <!-- /.box -->
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
@@ -187,10 +187,10 @@ include '../../controller/user/profile.php';
                     </div>
                   </div>
                     <div class="form-group">
-                    <label for="photo" class="col-sm-2 control-label">Upload Foto Profile</label>
+                    <label for="photo" class="col-sm-2 control-label">Upload Foto Profil</label>
+                    <br>
                     <div class="col-sm-10">
                        <input type="file" name="imageupload">
-                      
                       </div>                
                     </div>
                   <div class="form-group">
