@@ -11,7 +11,7 @@ $Repassword    	   =  $_POST['inputReTypePassword'];
 if ($password == $Repassword) {
 	$sql = "UPDATE `user` SET `password`='$password' WHERE email = '$email' ";
 	$result = mysqli_query($conn, $sql);
-	header("Location: ../../view/user/profilePage.php");
+	echo "<script>alert('Password Berhasil diganti'); window.location.href='../../view/user/profilePage.php'</script>";
 }
 else{
 	echo "password tidak cocok";

@@ -14,8 +14,8 @@ $pekerjaan		 =  $_POST['inputPekerjaan'];
 $image = $_FILES['imageupload']['name'];
 $newname = $email.".png";
 
-echo "image name : ";
-echo $newname;
+//echo "image name : ";
+//echo $newname;
 
 // image file directory
 $target = "../../dist/userpicture/".basename($newname);
@@ -28,12 +28,18 @@ $sql = "UPDATE datadiri_alumni
 // Upload file
 if (move_uploaded_file($_FILES['imageupload']['tmp_name'], $target)) {
 	$msg = "";
-	echo $msg;
+	//echo $msg;
 	chmod($target, 0755);
 }else{
 	$msg = "Failed to upload image";
-	echo $msg;
+	//echo $msg;
 }
 
 $result = mysqli_query($conn, $sql);
-header("Location: ../../view/user/profilePage.php");
+if ($result) {
+	echo "<script>alert('Data Data Diri Berhasil diupdate'); window.location.href='../../view/user/profilePage.php'</script>";
+}
+else {
+	echo "<script>alert('Data Tidak Tersimpan'); window.location.href='../../view/user/profilePage.php'</script>";
+}
+
