@@ -14,10 +14,13 @@ $pekerjaan		 =  $_POST['inputPekerjaan'];
 $image = $_FILES['imageupload']['name'];
 $newname = $email.".png";
 $maxsize = 1048576;
-
+$valid_ext = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
 if ($_FILES['imageupload']['size'] <= $maxsize) {
 	
+	$ext = 	pathinfo($_FILES['imageupload']['name'], PATHINFO_EXTENSION); //cek ekstensi
+
+
 //echo "image name : ";
 //echo $newname;
 
@@ -30,12 +33,17 @@ if ($_FILES['imageupload']['size'] <= $maxsize) {
 			email = '$email' ";
 
 // Upload file
-	if (move_uploaded_file($_FILES['imageupload']['tmp_name'], $target)) {
-		$msg = "";
+	if (in_array($ext, $valid_ext)) { //cek ekstensi
+		move_uploaded_file($_FILES['imageupload']['tmp_name'], $target);
+		//$msg = "";
 		//echo $msg;
 		chmod($target, 0755);
-	}else{
-		$msg = "Failed to upload image";
+		mysqli_query($conn, $sql);
+		header("Location: ../../view/user/profilePage.php");
+	}
+
+	else{
+		echo "<script>alert('Format File Salah'); 	window.location.href='../../view/user/profilePage.php'</script>";
 	//echo $msg;
 	}
 
@@ -46,8 +54,7 @@ if ($_FILES['imageupload']['size'] <= $maxsize) {
 	else {
 		echo "<script>alert('Data Tidak Tersimpan'); 	window.location.href='../../view/user/profilePage.php'</script>";
 	}*/
-	mysqli_query($conn, $sql);
-	header("Location: ../../view/user/profilePage.php");
+	
 }
 else {
 	echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";
