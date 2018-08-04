@@ -10,8 +10,89 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/id/id-all.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+		//MAP
+		var jumlah = 30;
+		var data = [
+			['id-3700', 0],
+			['id-ac', jumlah],
+			['id-ki', 2],
+			['id-jt', 3],
+			['id-be', 4],
+			['id-bt', 5],
+			['id-kb', 6],
+			['id-bb', 7],
+			['id-ba', 8],
+			['id-ji', 9],
+			['id-ks', 10],
+			['id-nt', 11],
+			['id-se', 12],
+			['id-kr', 13],
+			['id-ib', 14],
+			['id-su', 15],
+			['id-ri', 16],
+			['id-sw', 17],
+			['id-la', 18],
+			['id-sb', 19],
+			['id-ma', 20],
+			['id-nb', 21],
+			['id-sg', 22],
+			['id-st', 23],
+			['id-pa', 24],
+			['id-jr', 25],
+			['id-1024', 26],
+			['id-jk', 27],
+			['id-go', 28],
+			['id-yo', 29],
+			['id-kt', 30],
+			['id-sl', 31],
+			['id-sr', 32],
+			['id-ja', 33]
+		];
+
+		// Create the chart
+		Highcharts.mapChart('containermap', {
+			chart: {
+				map: 'countries/id/id-all'
+			},
+
+			title: {
+				text: 'Persebaran Alumni Nurul Fikri Boarding School'
+			},
+
+			subtitle: {
+				text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/id/id-all.js">Indonesia</a>'
+			},
+
+			mapNavigation: {
+				enabled: true,
+				buttonOptions: {
+					verticalAlign: 'bottom'
+				}
+			},
+
+			colorAxis: {
+				min: 0
+			},
+
+			series: [{
+				data: data,
+				name: 'Jumlah Alumni',
+				states: {
+					hover: {
+						color: '#BADA55'
+					}
+				},
+				dataLabels: {
+					enabled: true,
+					format: '{point.name}'
+				}
+			}]
+		});
+		//************
   // Add smooth scrolling to all links
   $("a").on('click', function(event) {
 
@@ -128,9 +209,8 @@
 <div class="w3-content w3-container w3-padding-64" id="persebaranAlumni" >
   <h3 class="w3-center">PERSEBARAN ALUMNI</h3>
   <p class="w3-center"><em>  </em></p><br>
-  <img src="dist/img/indonesia.png" alt="indonesia" class="responsive" >
+  <div id="containermap"></div>
 </div>
-
 
 <!-- Container (About Section) -->
 <div class="w3-content w3-container w3-padding-64">
