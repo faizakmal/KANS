@@ -16,46 +16,45 @@ $newname = $email.".png";
 $maxsize = 1048576;
 $valid_ext = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
+$changeImage = 0;
+/*
+	2 = success;
+	
+*/
+
 if ($_FILES['imageupload' ] ['error'] != 4){
-	if ($_FILES['imageupload']['size'] <= $maxsize) {
-	
-	
-		$ext = 	pathinfo($_FILES['imageupload']['name'], PATHINFO_EXTENSION); //cek ekstensi
-
-
-		// image file directory
+	// image file directory
 	$target = "../../dist/userpicture/".basename($newname);
-
+	// Extension Check
+	$ext = 	pathinfo($_FILES['imageupload']['name'], PATHINFO_EXTENSION);
+	if (in_array($ext, $valid_ext)) {
+		$changeImage++;
+	}else{
+		echo "<script>alert('Format File Salah'); 	window.location.href='../../view/user/profilePage.php'</script>";
+	//echo $msg;
+	}
+	//Max Upload File
+	if ($_FILES['imageupload']['size'] <= $maxsize){
+		$changeImage++;
+	}else{
+		echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";		
+	}
+	if ($changeImage == 2){
+		move_uploaded_file($_FILES['imageupload']['tmp_name'], $target);
+		chmod($target, 0755);	
+		$sql = "UPDATE datadiri_alumni
+				SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan' 
+				where 
+				email = '$email' ";
+		mysqli_query($conn, $sql);
+		header("Location: ../../view/user/profilePage.php");
+	}
+}else{	
 	$sql = "UPDATE datadiri_alumni
 			SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan' 
 			where 
 			email = '$email' ";
-
-// Upload file
-	if (in_array($ext, $valid_ext)) { //cek ekstensi
-		move_uploaded_file($_FILES['imageupload']['tmp_name'], $target);
-		//$msg = "";
-		//echo $msg;
-		chmod($target, 0755);
-		mysqli_query($conn, $sql);
-		header("Location: ../../view/user/profilePage.php");
-	}
-
-	else{
-		echo "<script>alert('Format File Salah'); 	window.location.href='../../view/user/profilePage.php'</script>";
-	//echo $msg;
-	}
-
-	/*$result = mysqli_query($conn, $sql);
-	if ($result) {
-		echo "<script>alert('Data Data Diri Berhasil diupdate'); window.location.href='../../view/user/profilePage.php'</script>";
-	}
-	else {
-		echo "<script>alert('Data Tidak Tersimpan'); 	window.location.href='../../view/user/profilePage.php'</script>";
-	}*/
-	
+	mysqli_query($conn, $sql);
+	header("Location: ../../view/user/profilePage.php");	
 }
-else {
-	echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";
-}
-} 
+

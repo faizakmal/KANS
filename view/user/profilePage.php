@@ -194,6 +194,7 @@ include '../../controller/user/profile.php';
                     <br>
                     <div class="col-sm-10">
                        <input type="file" name="imageupload">
+                       <a>*max file size 1Mb</a>
                       </div>                
                     </div>
                   <div class="form-group">
