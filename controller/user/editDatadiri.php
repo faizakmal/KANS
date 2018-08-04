@@ -16,15 +16,14 @@ $newname = $email.".png";
 $maxsize = 1048576;
 $valid_ext = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
-if ($_FILES['imageupload']['size'] <= $maxsize) {
+if ($_FILES['imageupload' ] ['error'] != 4){
+	if ($_FILES['imageupload']['size'] <= $maxsize) {
 	
-	$ext = 	pathinfo($_FILES['imageupload']['name'], PATHINFO_EXTENSION); //cek ekstensi
+	
+		$ext = 	pathinfo($_FILES['imageupload']['name'], PATHINFO_EXTENSION); //cek ekstensi
 
 
-//echo "image name : ";
-//echo $newname;
-
-// image file directory
+		// image file directory
 	$target = "../../dist/userpicture/".basename($newname);
 
 	$sql = "UPDATE datadiri_alumni
@@ -59,3 +58,4 @@ if ($_FILES['imageupload']['size'] <= $maxsize) {
 else {
 	echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";
 }
+} 
