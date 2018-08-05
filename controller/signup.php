@@ -11,17 +11,17 @@ $rePassword = $_POST['form-repassword'];
 
 //cek data klo kosong
 if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
-	header("Location: ../index.html?msg='Error!!, Fill The Data'");
+	header("Location: ../index.php?msg='Error!!, Fill The Data'");
 	exit();
 }else{
 	//email checker validasi
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-		echo "<script>alert('Error!!, Email Invalid'); window.location.href='../index.html'</script>";
+		echo "<script>alert('Error!!, Email Invalid'); window.location.href='../index.php'</script>";
 		exit();
 	}else{
 		//check symbol on name
 		if(!preg_match("/^[a-zA-Z]*$/", $nama)){
-			echo "<script>alert('Do Not Use Any Symbol On Your Name'); window.location.href='../index.html'</script>";
+			echo "<script>alert('Do Not Use Any Symbol On Your Name'); window.location.href='../index.php'</script>";
 			exit();
 		}else{
 			//email udah ke pake apa belom
@@ -29,7 +29,7 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 			$result = mysqli_query($conn, $sql);
 			$resultCheck = mysqli_num_rows($result);
 			if($resultCheck > 0){
-				echo "<script>alert('Error!!, This Email is Used'); window.location.href='../index.html'</script>";
+				echo "<script>alert('Error!!, This Email is Used'); window.location.href='../index.php'</script>";
 				exit();
 			}else{
 				//hashing password
@@ -52,10 +52,10 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 					mysqli_query($conn, $sql2);
 					mysqli_query($conn, $sql3);
 					//sucess add to database
-					echo "<script>alert('Account Created'); window.location.href='../index.html'</script>";
+					echo "<script>alert('Account Created'); window.location.href='../index.php'</script>";
 					exit();
 				}else{
-					echo "<script>alert('Error!!, Repeat The Password'); window.location.href='../index.html'</script>";
+					echo "<script>alert('Error!!, Repeat The Password'); window.location.href='../index.php'</script>";
 					exit();
 				}				
 			}

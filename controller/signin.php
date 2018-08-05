@@ -9,7 +9,7 @@ $email    = mysqli_real_escape_string($conn, $_POST['form-email']);
 $pass 	  = md5($password); //password decrypt
 //check data login kosong
 if(empty($email)||empty($password)){
-	echo "<script>alert('Error!!, Please Input Username and Password'); window.location.href='../index.html'</script>";
+	echo "<script>alert('Error!!, Please Input Username and Password'); window.location.href='../index.php'</script>";
 	exit();
 }else{
 	$sql = "SELECT * FROM `user` WHERE `email`= '$email'";
@@ -17,13 +17,13 @@ if(empty($email)||empty($password)){
 	$resultCheck = mysqli_num_rows($result);
 	//validasi Email
 	if($resultCheck < 1){
-		echo "<script>alert('Email Invalid'); window.location.href='../index.html'</script>";
+		echo "<script>alert('Email Invalid'); window.location.href='../index.php'</script>";
 		exit();
 	}else{
 		if($row =  mysqli_fetch_assoc($result)){
 			//check password
 			if($pass != $row['password']){
-				echo "<script>alert('Email and Password Invalid'); window.location.href='../index.html'</script>";
+				echo "<script>alert('Email and Password Invalid'); window.location.href='../index.php'</script>";
 				exit();
 			}else{
 				$_SESSION['email'] = $row['email'];
