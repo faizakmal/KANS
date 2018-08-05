@@ -12,45 +12,68 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/mapdata/countries/id/id-all.js"></script>
+<?php
+	include 'database/connect.php';
+	
+	$temp;	
+	
+	$proviceArr = array("ACEH", "EAST KALIMANTAN", "CENTRAL JAVA", "BENGKULU", "BANTEN"
+					   ,"WEST KALIMANTAN","BANGKA BELITUNG","BALI","EAST JAVA","SOUTH KALIMANTAN"
+					   ,"EAST NUSA TENGGARA","SOUTH SULAWESI","RIAU ISLANDS","IRIAN JAYA", "NORTH SUMATRA"
+					   ,"RIAU","NORTH SULAWESI","NORTH MALUKU","WEST SUMATRA","MALUKU","WEST NUSA TENGGARA"
+					   ,"SOUTH EAST SULAWESI","CENTRAL SULAWESI","PAPUA","WEST JAVA","LAMPUNG","JAKARTA"
+					   ,"GORONTALO","YOGYAKARTA","CENTRAL KALIMANTAN","SOUTH SUMATRA","WEST SULAWESI"
+					   ,"JAMBI"); 
+	$sumArr = count($proviceArr);
+	for($a = 0; $a < $sumArr; $a++){
+		//getCount($proviceArr[$a]);
+		$nameProvince = $proviceArr[$a];
+		$sql = "SELECT COUNT(datadiri_alumni.alamat) FROM datadiri_alumni WHERE datadiri_alumni.alamat LIKE '%$nameProvince%'";
+		$result = mysqli_query($conn, $sql);
+		if ($data = mysqli_fetch_array ($result))
+			$temp = $data[0];
+		$sumPopulation[$a] = $temp;
+	}
+	
+?>
 <script type="text/javascript">
     $(document).ready(function(){
-		//MAP
-		var jumlah = 30;
+		//MAP		
 		var data = [
 			['id-3700', 0],
-			['id-ac', jumlah],
-			['id-ki', 2],
-			['id-jt', 3],
-			['id-be', 4],
-			['id-bt', 5],
-			['id-kb', 6],
-			['id-bb', 7],
-			['id-ba', 8],
-			['id-ji', 9],
-			['id-ks', 10],
-			['id-nt', 11],
-			['id-se', 12],
-			['id-kr', 13],
-			['id-ib', 14],
-			['id-su', 15],
-			['id-ri', 16],
-			['id-sw', 17],
-			['id-la', 18],
-			['id-sb', 19],
-			['id-ma', 20],
-			['id-nb', 21],
-			['id-sg', 22],
-			['id-st', 23],
-			['id-pa', 24],
-			['id-jr', 25],
-			['id-1024', 26],
-			['id-jk', 27],
-			['id-go', 28],
-			['id-yo', 29],
-			['id-kt', 30],
-			['id-sl', 31],
-			['id-sr', 32],
-			['id-ja', 33]
+			['id-ac', "<?php echo $sumPopulation[0];?>"], //aceh
+			['id-ki', "<?php echo $sumPopulation[1];?>"], //kalimantan timur
+			['id-jt', "<?php echo $sumPopulation[2];?>"], //jawa tengah
+			['id-be', "<?php echo $sumPopulation[3];?>"], //bengkulu
+			['id-bt', "<?php echo $sumPopulation[4];?>"], //banten
+			['id-kb', "<?php echo $sumPopulation[5];?>"], //kalimantan barat
+			['id-bb', "<?php echo $sumPopulation[6];?>"], //bangka belitung
+			['id-ba', "<?php echo $sumPopulation[7];?>"], //bali
+			['id-ji', "<?php echo $sumPopulation[8];?>"], //jawa timur
+			['id-ks', "<?php echo $sumPopulation[9];?>"], //kalimantan selatan
+			['id-nt', "<?php echo $sumPopulation[10];?>"], //NTT
+			['id-se', "<?php echo $sumPopulation[11];?>"], //sulawesi selatan
+			['id-kr', "<?php echo $sumPopulation[12];?>"], //kepulawan riau
+			['id-ib', "<?php echo $sumPopulation[13];?>"], //irian jaya
+			['id-su', "<?php echo $sumPopulation[14];?>"], //sumatra utara
+			['id-ri', "<?php echo $sumPopulation[15];?>"], //riau
+			['id-sw', "<?php echo $sumPopulation[16];?>"], //sulawesi utara
+			['id-la', "<?php echo $sumPopulation[17];?>"], //maluku utara
+			['id-sb', "<?php echo $sumPopulation[18];?>"], //sumatera barat
+			['id-ma', "<?php echo $sumPopulation[19];?>"], //malluku
+			['id-nb', "<?php echo $sumPopulation[20];?>"], //NTB
+			['id-sg', "<?php echo $sumPopulation[21];?>"], //sulawesi tenggara
+			['id-st', "<?php echo $sumPopulation[22];?>"], //sulawesi tengah
+			['id-pa', "<?php echo $sumPopulation[23];?>"], //papua
+			['id-jr', "<?php echo $sumPopulation[24];?>"], //jawa barat
+			['id-1024', "<?php echo $sumPopulation[25];?>"], //lampung
+			['id-jk', "<?php echo $sumPopulation[26];?>"], //jakarta
+			['id-go', "<?php echo $sumPopulation[27];?>"], //gorontalo
+			['id-yo', "<?php echo $sumPopulation[28];?>"], //jogja
+			['id-kt', "<?php echo $sumPopulation[29];?>"], //kalimantan tengah
+			['id-sl', "<?php echo $sumPopulation[30];?>"], //sumatera selatan
+			['id-sr', "<?php echo $sumPopulation[31];?>"], //sulawesi barat
+			['id-ja', "<?php echo $sumPopulation[32];?>"]  //jambi
 		];
 
 		// Create the chart

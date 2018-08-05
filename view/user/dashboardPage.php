@@ -20,7 +20,7 @@ if (!isset($_SESSION['name'])){
 <div class="wrapper">
   <!--navbar header-->
   <header class="main-header">
-    <a href="homePage.php" class="logo">
+    <a href="dashboardPage.php" class="logo">
       <span class="logo-mini"><b>NF</b></span>
       <span class="logo-lg"><img src="../../dist/img/btnhome.png" class="img-circle" alt="Home" style="margin-right: 10px;"><b>KANS NFBS</b></span>
     </a>
