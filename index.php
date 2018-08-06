@@ -151,7 +151,7 @@
     </a>
     <a href="#home" class="w3-bar-item w3-button ">HOME</a>
     <a href="#persebaranAlumni" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> Pesebaran Alumni</a>
-    <a href="#kegiatan" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-camera-retro"></i> Kegiatan Alumni</a>
+    <a href="#kegiatan" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-camera-retro"></i> Agenda Alumni</a>
     <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> Kontak</a>
     <a href="#login" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red" onclick="document.getElementById('id01').style.display='block'">
      Login
@@ -161,7 +161,7 @@
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
     <a href="#persebaranAlumni" class="w3-bar-item w3-button" onclick="toggleFunction()">Persebaran Alumni</a>
-    <a href="#kegiatan" class="w3-bar-item w3-button" onclick="toggleFunction()">Kegiatan Alumni</a>
+    <a href="#kegiatan" class="w3-bar-item w3-button" onclick="toggleFunction()">Agenda Alumni</a>
     <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">Kontak</a>
     <a href="#login" class="w3-bar-item w3-button" onclick="document.getElementById('id01').style.display='block'">Login</a>
   </div>
@@ -209,7 +209,7 @@
              <i class="fa fa-lock"></i><label> ReType Password</label>
             <input class="w3-input w3-border" type="Password"  name="form-repassword" placeholder="ReType Password">
             <br>
-             <i class="fa fa-user"></i><label> Nama Lengkap</label>
+             <i class="fa fa-user"></i><label> Nama Panggilan</label>
             <input class="w3-input w3-border" type="text" name="form-nama" placeholder="Input Nama Panggilan">
             <br>
             <i class="fa fa-mortar-board"></i><label>Angkatan</label>
@@ -231,48 +231,15 @@
 <!-- Container (About Section) -->
 <div class="w3-content w3-container w3-padding-64" id="persebaranAlumni" >
   <h3 class="w3-center">PERSEBARAN ALUMNI</h3>
-  <p class="w3-center"><em>  </em></p><br>
-  <div id="containermap"></div>
-</div>
-
-<!-- Container (About Section) -->
-<div class="w3-content w3-container w3-padding-64">
-  <p class="w3-large w3-center w3-padding-16">Data Statistik Alumni NFBS</p>
-  <p class="w3-wide"><i class="fa fa-address-book-o"></i>JATABEK</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:90%">90%</div>
-  </div>
- <p class="w3-wide"><i class="fa fa-address-book-o"></i>BANDUNG</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:85%">85%</div>
-  </div>
-  <p class="w3-wide"><i class="fa fa-address-book-o"></i>JAWA TENGAH</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-  </div>
-  <p class="w3-wide"><i class="fa fa-address-book-o"></i>YOGYAKARTA</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-  </div>
-  <p class="w3-wide"><i class="fa fa-address-book-o"></i>JAWA TIMUR</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-  </div>
-    <p class="w3-wide"><i class="fa fa-address-book-o"></i>SUMATRA</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-  </div>
-      <p class="w3-wide"><i class="fa fa-address-book-o"></i>LAIN=LAIN</p>
-  <div class="w3-light-grey">
-    <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-  </div>
+  <p class="w3-center" ><em>  </em></p><br>
+  <div id="containermap" style="width:100%"></div>
 </div>
 
 
 <!-- Second Parallax Image with Portfolio Text -->
 <div class="bgimg-2 w3-display-container w3-opacity-min">
   <div class="w3-display-middle">
-    <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
+    <span class="w3-xxlarge w3-text-white w3-wide">Agenda</span>
   </div>
 </div>
 
@@ -334,7 +301,7 @@ function carousel() {
 <!-- Third Parallax Image with Portfolio Text -->
 <div class="bgimg-3 w3-display-container w3-opacity-min">
   <div class="w3-display-middle">
-     <span class="w3-xxlarge w3-text-white w3-wide">KONTAK KANS NFBS</span>
+     <span class="w3-xxlarge w3-text-white w3-wide">KONTAK</span>
   </div>
 </div>
 
@@ -342,12 +309,12 @@ function carousel() {
 <div class="w3-content w3-container w3-padding-64" id="contact">
   <h3 class="w3-center">KONTAK KANS NFBS</h3>
   <div class="w3-row w3-padding-32 w3-section">
-    <div class="w3-col m4 w3-container">
+    <div class="w3-col m7 w3-container">
       <!-- Add Google Maps -->
       <div id="googleMap" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
     </div>
     <br><br><br><br><br><br>
-    <div class="w3-col m8 w3-panel">
+    <div class="w3-col m5 w3-panel">
       <div class="w3-large w3-margin-bottom">
         <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Nurul Fikri Boarding School Anyer<br>
         <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: kansnfbs@gmail.com<br>
