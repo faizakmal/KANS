@@ -49,7 +49,7 @@ include '../../controller/user/profile.php';
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/userpicture/<?php echo $image?>" style="width: 38px; height: 38px;" class="img-circle" alt="User Image">
+          <img src="../../dist/userpicture/<?php echo $image?>" style="width: 36px; height: 36px; border-radius: 50%;" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo $name; ?></p>
@@ -80,7 +80,7 @@ include '../../controller/user/profile.php';
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image?>" alt="User profile picture" style = "width: 100px; height: 100px;" >
+              <img class="profile-user-img img-responsive img-circle" src="../../dist/userpicture/<?php echo $image?>" alt="User profile picture" style = "width: 100px; height: 100px; border-radius: 50%;" >
               <h3 class="profile-username text-center"><?php echo $name; ?></h3>
               <p class="text-muted text-center"><?php echo $email; ?></p>
               <ul class="list-group list-group-unbordered">
@@ -129,7 +129,8 @@ include '../../controller/user/profile.php';
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
               <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
-              <li><a href="#tab_4" data-toggle="tab">Settings</a></li>
+              <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
+              <li><a href="#tab_5" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -213,6 +214,20 @@ include '../../controller/user/profile.php';
                     </div>
                   </div>
                   <div class="form-group">
+                    <label for="inputStrata" class="col-sm-2 control-label">Strata</label>
+
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="inputStrata">
+                            <option selected="selected"><?php echo $strata; ?></option>
+                            <option>D1/D2</option>
+                            <option>D3</option>
+                            <option>S1</option>
+                            <option>S2</option>
+                            <option>S3</option>
+                      </select>                    
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label for="inputUniversitas" class="col-sm-2 control-label">Universitas</label>
 
                     <div class="col-sm-10">
@@ -276,13 +291,86 @@ include '../../controller/user/profile.php';
                     </div>
                   </div>
                   <div class="form-group">
+                    <label for="inputDivisiPerusahaan" class="col-sm-2 control-label">Divisi Perusahaan</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputDivisiPerusahaan" placeholder="Divisi Perusahaan" value="<?php echo $divisiPerusahaan; ?>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputTahunPekerjaan" class="col-sm-2 control-label">Tahun Bekerja</label>
+
+                    <div class="col-sm-7">
+                      <input type="year" class="form-control" name="inputTahunPekerjaan" placeholder="Tahun Bekerja" value="<?php echo $tahunPerusahaan; ?>">
+                    </div>
+                    <div class="col-sm-3">
+                     <label for="inputTahunPekerjaan" class="col-sm-3 control-label">Tahun </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success" onclick='return checkInput()'>Submit</button>
                     </div>
                   </div>
                 </form>
               </div>
-             <div class="tab-pane" id="tab_4">
+              <div class="tab-pane" id="tab_4">
+                <form class="form-horizontal" method="POST" action="../../controller/admin/editMediaSosial.php">
+                  <div class="form-group">
+                    <div class="col-sm-10">
+                     <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <label for="inputFacebook" class="col-sm-2 control-label">Facebook</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputFacebook" placeholder="facebook.com/..." value=<?php echo $facebook; ?>>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <label for="inputTwitter" class="col-sm-2 control-label">Twitter</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputTwitter" placeholder="@..." value=<?php echo $twitter; ?>>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputLine" class="col-sm-2 control-label">Line ID</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputLine" placeholder="ID Line" value=<?php echo $line; ?>>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputInstagram" class="col-sm-2 control-label">Instagram</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputInstagram" placeholder="@..." value=<?php echo $instagram; ?>>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $noHP; ?>>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputLinkedIn" class="col-sm-2 control-label">LinkedIn</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="inputLinkedIn" placeholder="linkedin.com/in/..."  value= "<?php echo $linkedin; ?>" >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-success" onclick='return checkInput()'>Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+             <div class="tab-pane" id="tab_5">
                 <form class="form-horizontal" method="POST" action="../../controller/user/editSettings.php">
                   <div class="form-group">
                     <div class="col-sm-10">
