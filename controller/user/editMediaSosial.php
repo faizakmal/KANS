@@ -3,15 +3,15 @@
 include '../../database/connect.php';
 
 $email     		   =  $_POST['inputEmail'];
-$strata 		   =  $_POST['inputStrata'];
-$universitas 	   =  $_POST['inputUniversitas'];
-$fakultas    	   =  $_POST['inputFakultas'];
-$jurusan 	   	   =  $_POST['inputJurusan'];
-$tahunMasuk  	   =  $_POST['inputTahunMasuk'];
+$fb    			   =  $_POST['inputFacebook'];
+$twitter 		   =  $_POST['inputTwitter'];
+$line 		   	   =  $_POST['inputLine'];
+$instagram 	   	   =  $_POST['inputInstagram'];
+$whatsapp 	  	   =  $_POST['inputWhatsapp'];
+$linkedin  	   =  $_POST['inputLinkedIn'];
 
-
-$sql = "UPDATE pendidikan_alumni
-			SET strata = '$strata', universitas = '$universitas', fakultas = '$fakultas', jurusan = '$jurusan', tahunMasuk = '$tahunMasuk'
+$sql = "UPDATE mediasosial_alumni
+			SET facebook = '$fb', twitter = '$twitter', lineid = '$line', instagram = '$instagram', whatsapp = '$whatsapp' , linkedin = '$linkedin'
 			where 
 			email = '$email' ";
 
