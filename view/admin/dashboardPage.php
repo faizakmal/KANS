@@ -48,7 +48,7 @@ if (!isset($_SESSION['name'])){
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/img/ketua.png" style="width:70px" class="img-circle" alt="User Image">
+          <img src="../../dist/img/ketua.png" style="width: 36px; height: 36px; border-radius: 50%;" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo $_SESSION['name']; ?></p>
