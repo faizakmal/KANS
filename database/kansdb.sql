@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 02, 2018 at 03:48 AM
--- Server version: 5.7.17-log
+-- Host: 127.0.0.1
+-- Generation Time: Aug 07, 2018 at 05:03 PM
+-- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -43,7 +43,31 @@ CREATE TABLE `datadiri_alumni` (
 
 INSERT INTO `datadiri_alumni` (`email`, `nama`, `image`, `alamat`, `noHP`, `angkatan`, `lulusan`, `pekerjaan`) VALUES
 ('husni@gmail.com', 'Husni Mubarok Al Ghifari', 'silueta.png', 'Gg. Makam D 14, Keputih, Surabaya City, East Java, Indonesia', '082298664546', '10', 'SMP-SMA', 'Mahasisa'),
-('husnimubarok@gmail.com', 'Muni', 'husnimubarok@gmail.com.png', '', '', '10', '', '');
+('r@gmail.com', 'Tayo Si Tayo', 'r@gmail.com.png', 'Wisma Permai Regency, Krajan Kulon, Waru, Sidoarjo Regency, East Java, Indonesia', '081222111111', '9', 'SMP-SMA', 'Mahasiswa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mediasosial_alumni`
+--
+
+CREATE TABLE `mediasosial_alumni` (
+  `email` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `facebook` varchar(50) NOT NULL,
+  `twitter` varchar(50) NOT NULL,
+  `lineid` varchar(50) NOT NULL,
+  `instagram` varchar(50) NOT NULL,
+  `whatsapp` varchar(50) NOT NULL,
+  `linkedin` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mediasosial_alumni`
+--
+
+INSERT INTO `mediasosial_alumni` (`email`, `facebook`, `twitter`, `lineid`, `instagram`, `whatsapp`, `linkedin`) VALUES
+('husni@gmail.com', '', '', '', '', '', ''),
+('r@gmail.com', 'fasfaf', '@opowqpeq', 'asdsadasdasd', '@asdasda', '081222111111', 'Poasda sasdada');
 
 -- --------------------------------------------------------
 
@@ -54,16 +78,18 @@ INSERT INTO `datadiri_alumni` (`email`, `nama`, `image`, `alamat`, `noHP`, `angk
 CREATE TABLE `pekerjaan_alumni` (
   `email` varchar(30) CHARACTER SET utf8 NOT NULL,
   `namaPerusahaan` varchar(30) NOT NULL,
-  `jenisPerusahaan` varchar(20) NOT NULL
+  `jenisPerusahaan` varchar(20) NOT NULL,
+  `divisiPerusahaan` varchar(50) NOT NULL,
+  `tahunBekerja` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pekerjaan_alumni`
 --
 
-INSERT INTO `pekerjaan_alumni` (`email`, `namaPerusahaan`, `jenisPerusahaan`) VALUES
-('husni@gmail.com', 'WISMA DOLLY', 'Bisnis'),
-('husnimubarok@gmail.com', '', '');
+INSERT INTO `pekerjaan_alumni` (`email`, `namaPerusahaan`, `jenisPerusahaan`, `divisiPerusahaan`, `tahunBekerja`) VALUES
+('husni@gmail.com', 'WISMA DOLLY', 'Bisnis', '', 0),
+('r@gmail.com', 'TOYOTA', 'Pemerintahan', 'Admin', 3);
 
 -- --------------------------------------------------------
 
@@ -73,6 +99,7 @@ INSERT INTO `pekerjaan_alumni` (`email`, `namaPerusahaan`, `jenisPerusahaan`) VA
 
 CREATE TABLE `pendidikan_alumni` (
   `email` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `strata` varchar(20) NOT NULL,
   `universitas` varchar(50) NOT NULL,
   `fakultas` varchar(30) NOT NULL,
   `jurusan` varchar(30) NOT NULL,
@@ -83,9 +110,9 @@ CREATE TABLE `pendidikan_alumni` (
 -- Dumping data for table `pendidikan_alumni`
 --
 
-INSERT INTO `pendidikan_alumni` (`email`, `universitas`, `fakultas`, `jurusan`, `tahunMasuk`) VALUES
-('husni@gmail.com', 'ITS', 'FTE', 'TEKNIK KOMPUTER', 2014),
-('husnimubarok@gmail.com', '', '', '', 0000);
+INSERT INTO `pendidikan_alumni` (`email`, `strata`, `universitas`, `fakultas`, `jurusan`, `tahunMasuk`) VALUES
+('husni@gmail.com', '', 'ITS', 'FTE', 'TEKNIK KOMPUTER', 2014),
+('r@gmail.com', 'S1', 'UNAIR', 'Ilmu Komputer', 'Kedokteran Gigi', 2013);
 
 -- --------------------------------------------------------
 
@@ -107,7 +134,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`email`, `password`, `name`, `angkatan`) VALUES
 ('admin@admin.com', '698d51a19d8a121ce581499d7b701668', 'admin', '613'),
 ('husni@gmail.com', '202cb962ac59075b964b07152d234b70', 'Husni', '10'),
-('husnimubarok@gmail.com', '202cb962ac59075b964b07152d234b70', 'Muni', '100');
+('r@gmail.com', '698d51a19d8a121ce581499d7b701668', 'Tayo', '9');
 
 --
 -- Indexes for dumped tables
@@ -117,6 +144,12 @@ INSERT INTO `user` (`email`, `password`, `name`, `angkatan`) VALUES
 -- Indexes for table `datadiri_alumni`
 --
 ALTER TABLE `datadiri_alumni`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `mediasosial_alumni`
+--
+ALTER TABLE `mediasosial_alumni`
   ADD PRIMARY KEY (`email`);
 
 --
@@ -146,6 +179,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `datadiri_alumni`
   ADD CONSTRAINT `datadiri_alumni_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `mediasosial_alumni`
+--
+ALTER TABLE `mediasosial_alumni`
+  ADD CONSTRAINT `mediasosial_alumni_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pekerjaan_alumni`
