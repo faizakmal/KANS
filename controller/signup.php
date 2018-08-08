@@ -46,11 +46,12 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 					$sql1 = "INSERT INTO datadiri_alumni (email, nama, image, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$email', '$nama', '$emailpic', '', '', '$angkatan', '', '');";
 					$sql2 = "INSERT INTO pekerjaan_alumni (email, namaPerusahaan, jenisPerusahaan) VALUES ('$email', '', '');";
 					$sql3 = "INSERT INTO pendidikan_alumni (email, universitas, fakultas, jurusan, tahunMasuk) VALUES ('$email', '', '', '', '');";
-
+					$sql4 = "INSERT INTO mediasosial_alumni (email, facebook, twitter, lineid, instagram, whatsapp, linkedin) VALUES ('$email', '', '', '', '', '', '');";
 					mysqli_query($conn, $sql);
 					mysqli_query($conn, $sql1);
 					mysqli_query($conn, $sql2);
 					mysqli_query($conn, $sql3);
+					mysqli_query($conn, $sql4);
 					//sucess add to database
 					echo "<script>alert('Account Created'); window.location.href='../index.php'</script>";
 					exit();
