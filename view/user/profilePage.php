@@ -13,7 +13,7 @@ include '../../controller/user/profile.php';
   <title>KANS NFBS | Profile</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <?php 
+  <?php
     include "../../dist/user/style.php"
   ?>
 </head>
@@ -36,7 +36,7 @@ include '../../controller/user/profile.php';
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="profilePage.php">
-              <span class="hidden-xs">Welcome, <?php echo $name; ?></span>
+              <span class="hidden-xs">Welcome, <?php echo $_SESSION['name']; ?></span>
             </a>
           </li>
         </ul>
@@ -113,9 +113,9 @@ include '../../controller/user/profile.php';
 
               <strong><i class="fa fa-phone margin-r-5"></i>No HP</strong>
               <p class="text-muted"><?php echo $noHP; ?></p>
-               
+
               <hr>
-              
+
               <strong><i class="fa fa-book margin-r-5"></i>Pendidikan</strong>
               <p class="text-muted"><?php echo $jurusan; ?>, <?php echo $universitas; ?></p>
             </div>
@@ -140,7 +140,7 @@ include '../../controller/user/profile.php';
                       <input type="hidden" class="form-control" name="inputEmail" value= "<?php echo $email; ?>" >
                     </div>
                   </div>
-                
+
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
@@ -180,7 +180,7 @@ include '../../controller/user/profile.php';
                             <option>SMP</option>
                             <option>SMA</option>
                             <option>SMP-SMA</option>
-                      </select>    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -196,7 +196,7 @@ include '../../controller/user/profile.php';
                     <div class="col-sm-10">
                        <input type="file" name="imageupload">
                        <a>*max file size 1Mb</a>
-                      </div>                
+                      </div>
                     </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
@@ -224,7 +224,7 @@ include '../../controller/user/profile.php';
                             <option>S1</option>
                             <option>S2</option>
                             <option>S3</option>
-                      </select>                    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -247,7 +247,7 @@ include '../../controller/user/profile.php';
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputJurusan" placeholder="Jurusan" value= "<?php echo $jurusan; ?>" >
                     </div>
-                  </div> 
+                  </div>
                   <div class="form-group">
                     <label for="inputTahunMasuk" class="col-sm-2 control-label">Tahun Masuk</label>
 
@@ -280,7 +280,7 @@ include '../../controller/user/profile.php';
                             <option>Pemerintahan</option>
                             <option>Bisnis</option>
                             <option>NGO/LSM</option>
-                      </select>                    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -409,7 +409,7 @@ include '../../controller/user/profile.php';
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-    <?php 
+    <?php
     include "../../dist/user/js.php"
      ?>
 </body>
