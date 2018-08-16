@@ -11,8 +11,8 @@
     	<td>".$id."</td>
         <td>".$data[1]."</td>   
         <td>".$data[0]."</td>
-        <td>".$data[5]."</td>
-        <td>".$data[6]."</td>
+        <td>".$data[7]."</td>
+        <td>".$data[8]."</td>
         <td><a href=\"../../view/user/detailPage.php?id=".$data[0]."\"><i class='glyphicon glyphicon-search'></i></a>"."</td>
     </tr>   
                   ";    

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['name'])){
   <title>KANS NFBS | Cari Alumni</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- <?php 
+ <?php
     include "../../dist/user/style.php"
   ?>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -85,7 +85,7 @@ if (!isset($_SESSION['name'])){
           </div>
         </div>
         <div class="box-body">
-          <div class="table-responsive">    
+          <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped" >
                 <thead>
                 <tr>
@@ -112,7 +112,7 @@ if (!isset($_SESSION['name'])){
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
- <?php 
+ <?php
     include "../../dist/admin/js.php"
   ?>
 </body>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 include '../../controller/user/detail.php';
 ?>
@@ -13,7 +13,7 @@ include '../../controller/user/detail.php';
   <title>KANS NFBS | Cari Alumni</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <?php 
+   <?php
     include "../../dist/admin/style.php"
   ?>
 </head>
@@ -114,9 +114,9 @@ include '../../controller/user/detail.php';
 
               <strong><i class="fa fa-phone margin-r-5"></i>No HP</strong>
               <p class="text-muted"><?php echo $noHP; ?></p>
-               
+
               <hr>
-              
+
               <strong><i class="fa fa-book margin-r-5"></i>Pendidikan</strong>
               <p class="text-muted"><?php echo $jurusan; ?>, <?php echo $universitas; ?></p>
             </div>
@@ -147,6 +147,28 @@ include '../../controller/user/detail.php';
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap" disabled value= "<?php echo $name; ?>" >
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputTempatLahir" disabled placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
+
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" disabled class="form-control pull-right" name="datepicker" value="<?php echo $tanggallahir; ?>">
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
 
@@ -219,7 +241,7 @@ include '../../controller/user/detail.php';
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputJurusan" placeholder="Jurusan" disabled value= "<?php echo $jurusan; ?>" >
                     </div>
-                  </div> 
+                  </div>
                   <div class="form-group">
                     <label for="inputTahunMasuk" class="col-sm-2 control-label">Tahun Masuk</label>
 
@@ -251,7 +273,7 @@ include '../../controller/user/detail.php';
                       <input type="text" class="form-control" name="inputNamaPerusahaan" placeholder="Nama Perusahaan" disabled value="<?php echo $namaPerusahaan; ?>">
                     </div>
                   </div>
-                 
+
                    <div class="form-group">
                     <label for="inputDivisiPerusahaan" class="col-sm-2 control-label">Divisi Perusahaan</label>
 
@@ -333,7 +355,7 @@ include '../../controller/user/detail.php';
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-  <?php 
+  <?php
     include "../../dist/admin/js.php"
   ?>
 </body>

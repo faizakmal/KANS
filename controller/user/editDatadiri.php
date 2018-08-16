@@ -9,6 +9,9 @@ $noHP 	   		 =  $_POST['inputNoHP'];
 $angkatan  		 =  $_POST['inputAngkatan'];
 $lulusan  		 =  $_POST['inputLulusan'];
 $pekerjaan		 =  $_POST['inputPekerjaan'];
+$tempatlahir	 =  $_POST['inputTempatLahir'];
+$date			 =  $_POST['datepicker'];
+
 
 // Get image name
 $image = $_FILES['imageupload']['name'];
@@ -18,8 +21,7 @@ $valid_ext = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
 $changeImage = 0;
 /*
-	2 = success;
-	
+	2 = success;	
 */
 
 if ($_FILES['imageupload' ] ['error'] != 4){
@@ -37,24 +39,23 @@ if ($_FILES['imageupload' ] ['error'] != 4){
 	if ($_FILES['imageupload']['size'] <= $maxsize){
 		$changeImage++;
 	}else{
-		echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";		
+		echo "<script>alert('File Terlalu Besar'); 	window.location.href='../../view/user/profilePage.php'</script>";
 	}
 	if ($changeImage == 2){
 		move_uploaded_file($_FILES['imageupload']['tmp_name'], $target);
-		chmod($target, 0755);	
+		chmod($target, 0755);
 		$sql = "UPDATE datadiri_alumni
-				SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan' 
-				where 
+				SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
+				where
 				email = '$email' ";
 		mysqli_query($conn, $sql);
 		header("Location: ../../view/user/profilePage.php");
 	}
-}else{	
+}else{
 	$sql = "UPDATE datadiri_alumni
-			SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan' 
-			where 
+			SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
+			where
 			email = '$email' ";
 	mysqli_query($conn, $sql);
-	header("Location: ../../view/user/profilePage.php");	
+	header("Location: ../../view/user/profilePage.php");
 }
-

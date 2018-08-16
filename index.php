@@ -12,6 +12,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/mapdata/countries/id/id-all.js"></script>
+
 <?php
 	include 'database/connect.php';
 	
@@ -41,39 +42,39 @@
 		//MAP		
 		var data = [
 			['id-3700', 0],
-			['id-ac', "<?php echo $sumPopulation[0];?>"], //aceh
-			['id-ki', "<?php echo $sumPopulation[1];?>"], //kalimantan timur
-			['id-jt', "<?php echo $sumPopulation[2];?>"], //jawa tengah
-			['id-be', "<?php echo $sumPopulation[3];?>"], //bengkulu
-			['id-bt', "<?php echo $sumPopulation[4];?>"], //banten
-			['id-kb', "<?php echo $sumPopulation[5];?>"], //kalimantan barat
-			['id-bb', "<?php echo $sumPopulation[6];?>"], //bangka belitung
-			['id-ba', "<?php echo $sumPopulation[7];?>"], //bali
-			['id-ji', "<?php echo $sumPopulation[8];?>"], //jawa timur
-			['id-ks', "<?php echo $sumPopulation[9];?>"], //kalimantan selatan
-			['id-nt', "<?php echo $sumPopulation[10];?>"], //NTT
-			['id-se', "<?php echo $sumPopulation[11];?>"], //sulawesi selatan
-			['id-kr', "<?php echo $sumPopulation[12];?>"], //kepulawan riau
-			['id-ib', "<?php echo $sumPopulation[13];?>"], //irian jaya
-			['id-su', "<?php echo $sumPopulation[14];?>"], //sumatra utara
-			['id-ri', "<?php echo $sumPopulation[15];?>"], //riau
-			['id-sw', "<?php echo $sumPopulation[16];?>"], //sulawesi utara
-			['id-la', "<?php echo $sumPopulation[17];?>"], //maluku utara
-			['id-sb', "<?php echo $sumPopulation[18];?>"], //sumatera barat
-			['id-ma', "<?php echo $sumPopulation[19];?>"], //malluku
-			['id-nb', "<?php echo $sumPopulation[20];?>"], //NTB
-			['id-sg', "<?php echo $sumPopulation[21];?>"], //sulawesi tenggara
-			['id-st', "<?php echo $sumPopulation[22];?>"], //sulawesi tengah
-			['id-pa', "<?php echo $sumPopulation[23];?>"], //papua
-			['id-jr', "<?php echo $sumPopulation[24];?>"], //jawa barat
-			['id-1024', "<?php echo $sumPopulation[25];?>"], //lampung
-			['id-jk', "<?php echo $sumPopulation[26];?>"], //jakarta
-			['id-go', "<?php echo $sumPopulation[27];?>"], //gorontalo
-			['id-yo', "<?php echo $sumPopulation[28];?>"], //jogja
-			['id-kt', "<?php echo $sumPopulation[29];?>"], //kalimantan tengah
-			['id-sl', "<?php echo $sumPopulation[30];?>"], //sumatera selatan
-			['id-sr', "<?php echo $sumPopulation[31];?>"], //sulawesi barat
-			['id-ja', "<?php echo $sumPopulation[32];?>"]  //jambi
+			['id-ac', <?php echo $sumPopulation[0];?>], //aceh
+			['id-ki', <?php echo $sumPopulation[1];?>], //kalimantan timur
+			['id-jt', <?php echo $sumPopulation[2];?>], //jawa tengah
+			['id-be', <?php echo $sumPopulation[3];?>], //bengkulu
+			['id-bt', <?php echo $sumPopulation[4];?>], //banten
+			['id-kb', <?php echo $sumPopulation[5];?>], //kalimantan barat
+			['id-bb', <?php echo $sumPopulation[6];?>], //bangka belitung
+			['id-ba', <?php echo $sumPopulation[7];?>], //bali
+			['id-ji', <?php echo $sumPopulation[8];?>], //jawa timur
+			['id-ks', <?php echo $sumPopulation[9];?>], //kalimantan selatan
+			['id-nt', <?php echo $sumPopulation[10];?>], //NTT
+			['id-se', <?php echo $sumPopulation[11];?>], //sulawesi selatan
+			['id-kr', <?php echo $sumPopulation[12];?>], //kepulawan riau
+			['id-ib', <?php echo $sumPopulation[13];?>], //irian jaya
+			['id-su', <?php echo $sumPopulation[14];?>], //sumatra utara
+			['id-ri', <?php echo $sumPopulation[15];?>], //riau
+			['id-sw', <?php echo $sumPopulation[16];?>], //sulawesi utara
+			['id-la', <?php echo $sumPopulation[17];?>], //maluku utara
+			['id-sb', <?php echo $sumPopulation[18];?>], //sumatera barat
+			['id-ma', <?php echo $sumPopulation[19];?>], //malluku
+			['id-nb', <?php echo $sumPopulation[20];?>], //NTB
+			['id-sg', <?php echo $sumPopulation[21];?>], //sulawesi tenggara
+			['id-st', <?php echo $sumPopulation[22];?>], //sulawesi tengah
+			['id-pa', <?php echo $sumPopulation[23];?>], //papua
+			['id-jr', <?php echo $sumPopulation[24];?>], //jawa barat
+			['id-1024', <?php echo $sumPopulation[25];?>], //lampung
+			['id-jk', <?php echo $sumPopulation[26];?>], //jakarta
+			['id-go', <?php echo $sumPopulation[27];?>], //gorontalo
+			['id-yo', <?php echo $sumPopulation[28];?>], //jogja
+			['id-kt', <?php echo $sumPopulation[29];?>], //kalimantan tengah
+			['id-sl', <?php echo $sumPopulation[30];?>], //sumatera selatan
+			['id-sr', <?php echo $sumPopulation[31];?>], //sulawesi barat
+			['id-ja', <?php echo $sumPopulation[32];?>]  //jambi
 		];
 
 		// Create the chart
@@ -246,47 +247,46 @@
 <!-- Container (Portfolio Section) -->
 <div class="w3-content w3-container w3-padding-64" id="kegiatan">
   <h3 class="w3-center">AGENDA ALUMNI</h3>
-  <p class="w3-center"><em>Agenda alumni yang telah terlaksana</em></p><br>
+<p class="w3-center"><em>Agenda-Agenda KANS NFBS</em></p><br>
+    <div class="w3-display-container mySlides">
+      <div class='w3-row-padding w3-padding-16 w3-center'>
 
-<div class="w3-image w3-margin-top " width="100px" height="500">
-<div class="w3-display-container mySlides">
-   <img  src="dist/img/carousel1.jpeg" width="100%" onclick="onClick(this)" alt="Caption 1">
-  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
-    Caption 1
-  </div>
-</div>
-<div class="w3-display-container mySlides">
-   <img  src="dist/img/carousel2.png" width="100%" onclick="onClick(this)" alt="Caption 2">
-  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
-    Caption 2
-  </div>
-</div>
-<div class="w3-display-container mySlides">
-   <img  src="dist/img/carousel3.png" width="100%" onclick="onClick(this)" alt="Caption 3">
-  <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
-    Caption 3
-  </div>
-</div>
- 
-<script type="text/javascript">
-  	var myIndex = 0;
-	carousel();
+<?php
+// use this instagram access token generator http://instagram.pixelunion.net/
+$access_token="1835721399.1677ed0.4d2b46aa4d284eb6b7da1a12afd6b7ce";
+$photo_count=4;
+     
+$json_link="https://api.instagram.com/v1/users/self/media/recent/?";
+$json_link.="access_token={$access_token}&count={$photo_count}";
+$json = file_get_contents($json_link);
+$obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
-function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}    
-    x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 3000); // Change image every 2 seconds
+echo "";  
+foreach ($obj['data'] as $post) {
+     
+    $pic_text=$post['caption']['text'];
+    $pic_link=$post['link'];
+    $pic_like_count=$post['likes']['count'];
+    $pic_comment_count=$post['comments']['count'];
+    $pic_src=str_replace("http://", "https://", $post['images']['standard_resolution']['url']);
+    $pic_created_time=date("F j, Y", $post['caption']['created_time']);
+    $pic_created_time=date("F j, Y", strtotime($pic_created_time . " +1 days"));
+     
+      echo "<div class='w3-quarter'>";  
+        echo "<a href='{$pic_link}' target='_blank'>";
+            echo "<img class='img-responsive photo-thumb' style='width:100%' src='{$pic_src}' alt='{$pic_text}'>";
+        echo "</a>";
+        echo "</p>";
+      echo "</div>";
 }
+?>
 
-  </script>
- 
+    </div>
   </div>
+</div>
+
+ 
+
 </div>
 
 <!-- Modal for full size images on click-->

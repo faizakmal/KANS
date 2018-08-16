@@ -1,7 +1,9 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
+  }else if($_SESSION['name']!="admin"){
+        header('Location:../user/dashboardPage.php');
   }
 include '../../controller/admin/detail.php';
 ?>
@@ -13,7 +15,7 @@ include '../../controller/admin/detail.php';
   <title>KANS NFBS | Admin</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <?php 
+  <?php
   	include "../../dist/admin/style.php"
   ?>
 </head>
@@ -110,6 +112,29 @@ include '../../controller/admin/detail.php';
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap"  value= "<?php echo $name; ?>" >
                     </div>
                   </div>
+
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputTempatLahir" placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
+
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" class="form-control pull-right" name="datepicker" value="<?php echo $tanggallahir; ?>">
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
 
@@ -141,7 +166,7 @@ include '../../controller/admin/detail.php';
                             <option>SMP</option>
                             <option>SMA</option>
                             <option>SMP-SMA</option>
-                      </select>    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -177,7 +202,7 @@ include '../../controller/admin/detail.php';
                             <option>S1</option>
                             <option>S2</option>
                             <option>S3</option>
-                      </select>                    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -200,7 +225,7 @@ include '../../controller/admin/detail.php';
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputJurusan" placeholder="Jurusan" value= "<?php echo $jurusan; ?>" >
                     </div>
-                  </div> 
+                  </div>
                   <div class="form-group">
                     <label for="inputTahunMasuk" class="col-sm-2 control-label">Tahun Masuk</label>
 
@@ -233,7 +258,7 @@ include '../../controller/admin/detail.php';
                             <option>Pemerintahan</option>
                             <option>Bisnis</option>
                             <option>NGO/LSM</option>
-                      </select>                    
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -364,9 +389,8 @@ include '../../controller/admin/detail.php';
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-    <?php 
+    <?php
   	include "../../dist/admin/js.php"
   ?>
 </body>
 </html>
-

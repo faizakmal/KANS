@@ -9,7 +9,8 @@ $password    	   =  $_POST['inputPassword'];
 $Repassword    	   =  $_POST['inputReTypePassword'];
 
 if ($password == $Repassword) {
-	$sql = "UPDATE `user` SET `password`='$password' WHERE email = '$email' ";
+    $pass = md5($password);
+	$sql = "UPDATE `user` SET `password`='$pass' WHERE email = '$email' ";
 	$result = mysqli_query($conn, $sql);
 	header("Location: ../../view/admin/detailPage.php?id=".$email."");
 }

@@ -1,7 +1,9 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
+  }else if($_SESSION['name']!="admin"){
+        header('Location:../user/dashboardPage.php');
   }
 ?>
 <!DOCTYPE html>
@@ -12,7 +14,7 @@ if (!isset($_SESSION['name'])){
   <title>KANS NFBS | Admin</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <?php 
+  <?php
   	include "../../dist/admin/style.php"
   ?>
 </head>
@@ -94,9 +96,8 @@ if (!isset($_SESSION['name'])){
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-  <?php 
+  <?php
     include "../../dist/admin/js.php";
   ?>
 </body>
 </html>
-

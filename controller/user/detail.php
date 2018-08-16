@@ -2,18 +2,40 @@
 
 include '../../database/connect.php';
 $email= $_GET['id'];
-	$sql = "SELECT 
-				datadiri_alumni.email, datadiri_alumni.nama, datadiri_alumni.alamat, datadiri_alumni.noHP, datadiri_alumni.angkatan, datadiri_alumni.lulusan, datadiri_alumni.pekerjaan, datadiri_alumni.image,
-				pendidikan_alumni.strata, pendidikan_alumni.universitas, pendidikan_alumni.fakultas, pendidikan_alumni.jurusan, pendidikan_alumni.tahunMasuk,
-				pekerjaan_alumni.namaPerusahaan, pekerjaan_alumni.jenisPerusahaan, pekerjaan_alumni.divisiPerusahaan, pekerjaan_alumni.tahunBekerja, 
-				mediasosial_alumni.facebook, mediasosial_alumni.twitter, mediasosial_alumni.lineid,  mediasosial_alumni.instagram, mediasosial_alumni.whatsapp,  mediasosial_alumni.linkedin  
-			FROM user, datadiri_alumni, pendidikan_alumni, pekerjaan_alumni, mediasosial_alumni
-			where 
-			datadiri_alumni.email = user.email AND 
-			pendidikan_alumni.email=user.email AND 
-			pekerjaan_alumni.email=user.email AND 
-			mediasosial_alumni.email=user.email AND 
-			user.email = '$email'";
+	$sql = "SELECT
+    datadiri_alumni.email,
+    datadiri_alumni.nama,
+    datadiri_alumni.alamat,
+    datadiri_alumni.noHP,
+    datadiri_alumni.angkatan,
+    datadiri_alumni.lulusan,
+    datadiri_alumni.pekerjaan,
+    datadiri_alumni.image,
+    pendidikan_alumni.strata,
+    pendidikan_alumni.universitas,
+    pendidikan_alumni.fakultas,
+    pendidikan_alumni.jurusan,
+    pendidikan_alumni.tahunMasuk,
+    pekerjaan_alumni.namaPerusahaan,
+    pekerjaan_alumni.jenisPerusahaan,
+    pekerjaan_alumni.divisiPerusahaan,
+    pekerjaan_alumni.tahunBekerja,
+    mediasosial_alumni.facebook,
+    mediasosial_alumni.twitter,
+    mediasosial_alumni.lineid,
+    mediasosial_alumni.instagram,
+    mediasosial_alumni.whatsapp,
+    mediasosial_alumni.linkedin,
+    datadiri_alumni.tempat_lahir,
+    datadiri_alumni.tanggal_lahir
+FROM
+    user,
+    datadiri_alumni,
+    pendidikan_alumni,
+    pekerjaan_alumni,
+    mediasosial_alumni
+WHERE
+    datadiri_alumni.email = user.email AND pendidikan_alumni.email = user.email AND pekerjaan_alumni.email = user.email AND mediasosial_alumni.email = user.email AND user.email = '$email'";
 
 	$result = mysqli_query($conn, $sql);
 	if ($data = mysqli_fetch_array ($result)) {
@@ -40,6 +62,8 @@ $email= $_GET['id'];
 		$instagram = $data[20];
 		$whatsapp = $data[21];
 		$linkedin = $data[22];
+		$tempatlahir = $data[23];
+		$tanggallahir = $data[24];
 	}
 
 	else {
