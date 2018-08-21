@@ -1,9 +1,15 @@
 <?php
+if($_GET['refresh'] == 1){
+	echo "<script>window.location.href='../../view/user/profilePage.php'</script>";
+}
+
 session_start();
 if (!isset($_SESSION['name'])){
     header('Location:../../index.php');
   }
 include '../../controller/user/profile.php';
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +42,7 @@ include '../../controller/user/profile.php';
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="profilePage.php">
-              <span class="hidden-xs">Welcome, <?php echo $name; ?></span>
+              <span class="hidden-xs">Welcome, <?php echo $_SESSION['name']; ?></span>
             </a>
           </li>
         </ul>
@@ -62,11 +68,31 @@ include '../../controller/user/profile.php';
         <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li class="active"><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
+  
   <div class="content-wrapper">
+         <?php
+        if($_GET['sukses'] == 1){
+    ?>
+    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+                Data Berhasil Diupdate 
+    </div>
+    <?php
+        }
+    ?>
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+            });
+        }, 1500);
+    </script>
     <section class="content-header">
       <h1>Profil</h1>
       <ol class="breadcrumb">
@@ -127,10 +153,9 @@ include '../../controller/user/profile.php';
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Pendidikan Terakhir</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
               <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
-              <li><a href="#tab_5" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -146,6 +171,14 @@ include '../../controller/user/profile.php';
 
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap"  value= "<?php echo $name; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan"  value= "<?php echo $namapanggilan; ?>" >
                     </div>
                   </div>
 
@@ -171,7 +204,7 @@ include '../../controller/user/profile.php';
                   </div>
 
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
+                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat Sekarang</label>
 
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  onfocus="OnFocusInput(this)" onblur="OnBlurInput(this)" value= "<?php echo $alamat; ?>" >
@@ -337,7 +370,7 @@ include '../../controller/user/profile.php';
                 </form>
               </div>
               <div class="tab-pane" id="tab_4">
-                <form class="form-horizontal" method="POST" action="../../controller/admin/editMediaSosial.php">
+                <form class="form-horizontal" method="POST" action="../../controller/user/editMediaSosial.php">
                   <div class="form-group">
                     <div class="col-sm-10">
                      <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
@@ -373,9 +406,16 @@ include '../../controller/user/profile.php';
                   </div>
                   <div class="form-group">
                     <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
-
+                        <?php
+                            if ($whatsapp != ""){
+                                $hp = $whatsapp;
+                            }
+                            else{
+                                $hp = $noHP;
+                            }
+                        ?>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $noHP; ?>>
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $hp; ?>>
                     </div>
                   </div>
                   <div class="form-group">
@@ -392,34 +432,7 @@ include '../../controller/user/profile.php';
                   </div>
                 </form>
               </div>
-             <div class="tab-pane" id="tab_5">
-                <form class="form-horizontal" method="POST" action="../../controller/user/editSettings.php">
-                  <div class="form-group">
-                    <div class="col-sm-10">
-                     <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputPassword" placeholder="Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputReTypePassword" class="col-sm-2 control-label">ReType Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputReTypePassword" placeholder="ReType Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger" onclick='return checkInput()'>Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+          
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->

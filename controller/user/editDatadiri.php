@@ -2,8 +2,9 @@
 
 include '../../database/connect.php';
 
-$email   		 =  $_POST['inputEmail'];
-$nama 	 		 =  $_POST['inputNama'];
+$email   		   =  $_POST['inputEmail'];
+$nickname			 =  $_POST['inputNamaPanggilan'];
+$nama 	 		   =  $_POST['inputNama'];
 $alamat   		 =  $_POST['inputAlamat'];
 $noHP 	   		 =  $_POST['inputNoHP'];
 $angkatan  		 =  $_POST['inputAngkatan'];
@@ -21,7 +22,7 @@ $valid_ext = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
 $changeImage = 0;
 /*
-	2 = success;	
+	2 = success;
 */
 
 if ($_FILES['imageupload' ] ['error'] != 4){
@@ -48,14 +49,19 @@ if ($_FILES['imageupload' ] ['error'] != 4){
 				SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
 				where
 				email = '$email' ";
+	  $sql2 = "UPDATE user	SET name = '$nickname' where email = '$email' ";
 		mysqli_query($conn, $sql);
-		header("Location: ../../view/user/profilePage.php");
+		mysqli_query($conn, $sql2);
+		clearstatcache();//menghapus cache
+		header("Location: ../../view/user/profilePage.php?refresh=1");
 	}
 }else{
 	$sql = "UPDATE datadiri_alumni
 			SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
 			where
 			email = '$email' ";
+	$sql2 = "UPDATE user	SET name = '$nickname' where email = '$email' ";
 	mysqli_query($conn, $sql);
-	header("Location: ../../view/user/profilePage.php");
+	mysqli_query($conn, $sql2);
+	header("Location: ../../view/user/profilePage.php?sukses=1");
 }

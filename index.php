@@ -14,17 +14,66 @@
 <script src="https://code.highcharts.com/mapdata/countries/id/id-all.js"></script>
 
 <?php
+	session_start(); //session start
+    $_SESSION['LAST_ACTIVITY'] = time();
+
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    // last request was more than 30 minutes ago
+        session_unset();     // unset $_SESSION variable for the run-time
+        session_destroy();   // destroy session data in storage
+    }
+    if($_SESSION['last_session_request'] > time() - 2){
+    // users will be redirected to this page if it makes requests faster than 2 seconds
+    header("location: http://kansnfbs.com/");
+    exit;
+}
+
 	include 'database/connect.php';
-	
-	$temp;	
-	
+	require_once ('libraries/Google/autoload.php');
+
+	//****************************GOOGLE API***************************
+	//Insert your cient ID and secret
+	//You can get it from : https://console.developers.google.com/
+	$client_id = '145984459227-58e7qurq8j25eq35j7o78rjdu62j7ffr.apps.googleusercontent.com';
+	$client_secret = 'zQHs89SKIhjDrbQ0qtssNUVx';
+	$redirect_uri = 'http://localhost/kans/';
+
+	if (isset($_GET['logout'])) {
+	  unset($_SESSION['access_token']);
+	}
+
+	$client = new Google_Client();
+	$client->setClientId($client_id);
+	$client->setClientSecret($client_secret);
+	$client->setRedirectUri($redirect_uri);
+	$client->addScope("email");
+	$client->addScope("profile");
+
+	$service = new Google_Service_Oauth2($client);
+
+	if (isset($_GET['code'])) {
+	  $client->authenticate($_GET['code']);
+	  $_SESSION['access_token'] = $client->getAccessToken();
+	  header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+	  exit;
+	}
+
+	if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+	  $client->setAccessToken($_SESSION['access_token']);
+	} else {
+	  $authUrl = $client->createAuthUrl();
+	}
+
+	////**************************MAPS//**************************
+	$temp;
+
 	$proviceArr = array("ACEH", "EAST KALIMANTAN", "CENTRAL JAVA", "BENGKULU", "BANTEN"
 					   ,"WEST KALIMANTAN","BANGKA BELITUNG","BALI","EAST JAVA","SOUTH KALIMANTAN"
 					   ,"EAST NUSA TENGGARA","SOUTH SULAWESI","RIAU ISLANDS","IRIAN JAYA", "NORTH SUMATRA"
 					   ,"RIAU","NORTH SULAWESI","NORTH MALUKU","WEST SUMATRA","MALUKU","WEST NUSA TENGGARA"
 					   ,"SOUTH EAST SULAWESI","CENTRAL SULAWESI","PAPUA","WEST JAVA","LAMPUNG","JAKARTA"
 					   ,"GORONTALO","YOGYAKARTA","CENTRAL KALIMANTAN","SOUTH SUMATRA","WEST SULAWESI"
-					   ,"JAMBI"); 
+					   ,"JAMBI");
 	$sumArr = count($proviceArr);
 	for($a = 0; $a < $sumArr; $a++){
 		//getCount($proviceArr[$a]);
@@ -35,11 +84,12 @@
 			$temp = $data[0];
 		$sumPopulation[$a] = $temp;
 	}
-	
+	//**************************END MAPS********************************
+
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-		//MAP		
+		//MAP
 		var data = [
 			['id-3700', 0],
 			['id-ac', <?php echo $sumPopulation[0];?>], //aceh
@@ -119,22 +169,18 @@
 		//************
   // Add smooth scrolling to all links
   $("a").on('click', function(event) {
-
     // Make sure this.hash has a value before overriding default behavior
     if (this.hash !== "") {
       // Prevent default anchor click behavior
       event.preventDefault();
-
       // Store hash
-      var hash = this.hash;
-
+			var hash = this.hash;
       // Using jQuery's animate() method to add smooth page scroll
       // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
       $('html, body').animate({
         scrollTop: $(hash).offset().top
       }, 800, function(){
-   
-        // Add hash (#) to URL when done scrolling (default click behavior)
+           // Add hash (#) to URL when done scrolling (default click behavior)
         window.location.hash = hash;
       });
     } // End if
@@ -154,9 +200,51 @@
     <a href="#persebaranAlumni" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> Pesebaran Alumni</a>
     <a href="#kegiatan" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-camera-retro"></i> Agenda Alumni</a>
     <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> Kontak</a>
-    <a href="#login" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red" onclick="document.getElementById('id01').style.display='block'">
-     Login
-    </a>
+		<?php
+		if (isset($authUrl)){
+			//show login url
+			echo '<a href="'.$authUrl.'" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-green">Login</a>';
+		}else{
+			$user = $service->userinfo->get(); //get user info
+
+			//check if user exist in database using COUNT
+			$result = $conn->query("SELECT COUNT(email) as usercount FROM user WHERE email='$user->email'");
+			$user_count = $result->fetch_object()->usercount; //will return 0 if user doesn't exist
+
+			//admin
+			if($user->email == "kansnfbs@gmail.com"){
+				$_SESSION['email'] = $user->email;
+				$_SESSION['name'] = "admin";
+				echo "<script>window.location.href='view/admin/dashboardPage.php'</script>";
+			}
+			//if user already exist
+			else if($user_count){
+					$_SESSION['email'] = $user->email;
+					$_SESSION['name'] = $user->name;
+		      echo '<a href="'.$redirect_uri.'?logout=1" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">Log Out</a><a class="w3-bar-item  w3-button w3-right w3-hide-small" href="view/user/dashboardPage.php">'.$user->name.'</a>';
+		   }else{
+				 //REGISTER
+				 //insert ke database
+				 $nopic = $user->picture;
+				 $picforuser = 'dist/userpicture/'.$user->email.'.png';
+				 $emailpic = $user->email.".png";
+				 copy($nopic, $picforuser);
+				 $sql = "INSERT INTO user (email, name) VALUES ('$user->email', '');";
+				 $sql1 = "INSERT INTO datadiri_alumni (email, nama, image, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$user->email', '$user->name', '$emailpic', '', '', '', '', '');";
+				 $sql2 = "INSERT INTO pekerjaan_alumni (email, namaPerusahaan, jenisPerusahaan) VALUES ('$user->email', '', '');";
+				 $sql3 = "INSERT INTO pendidikan_alumni (email, universitas, fakultas, jurusan, tahunMasuk) VALUES ('$user->email', '', '', '', '');";
+				 $sql4 = "INSERT INTO mediasosial_alumni (email, facebook, twitter, lineid, instagram, whatsapp, linkedin) VALUES ('$user->email', '', '', '', '', '', '');";
+				 mysqli_query($conn, $sql);
+				 mysqli_query($conn, $sql1);
+				 mysqli_query($conn, $sql2);
+				 mysqli_query($conn, $sql3);
+				 mysqli_query($conn, $sql4);
+				 $_SESSION['email'] = $user->email;
+				 $_SESSION['name'] = $user->name;
+				 echo "<script>window.location.href='view/user/profilePage.php'</script>";
+			 }
+		}
+		?>
   </div>
 
   <!-- Navbar on small screens -->
@@ -164,14 +252,58 @@
     <a href="#persebaranAlumni" class="w3-bar-item w3-button" onclick="toggleFunction()">Persebaran Alumni</a>
     <a href="#kegiatan" class="w3-bar-item w3-button" onclick="toggleFunction()">Agenda Alumni</a>
     <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">Kontak</a>
-    <a href="#login" class="w3-bar-item w3-button" onclick="document.getElementById('id01').style.display='block'">Login</a>
+    <?php
+    if (isset($authUrl)){
+		//show login url
+		echo '<a href="'.$authUrl.'" class="w3-bar-item w3-button w3-hover-green">Login</a>';
+	}else{
+	   $user = $service->userinfo->get(); //get user info
+
+		//check if user exist in database using COUNT
+		$result = $conn->query("SELECT COUNT(email) as usercount FROM user WHERE email='$user->email'");
+		$user_count = $result->fetch_object()->usercount; //will return 0 if user doesn't exist
+
+		//admin
+			if($user->email == "kansnfbs@gmail.com"){
+				$_SESSION['email'] = $user->email;
+				$_SESSION['name'] = "admin";
+				echo "<script>window.location.href='view/admin/dashboardPage.php'</script>";
+			}
+			//if user already exist
+			else if($user_count){
+				$_SESSION['email'] = $user->email;
+				$_SESSION['name'] = $user->name;
+		        echo '<a class="w3-bar-item w3-button" href="view/user/dashboardPage.php">'.$user->name.'</a><a href="'.$redirect_uri.'?logout=1" class="w3-bar-item w3-button w3-hover-red">Log Out</a>';
+		   }else{
+				 //REGISTER
+				 //insert ke database
+				 $nopic = $user->picture;
+				 $picforuser = 'dist/userpicture/'.$user->email.'.png';
+				 $emailpic = $user->email.".png";
+				 copy($nopic, $picforuser);
+				 $sql = "INSERT INTO user (email, name) VALUES ('$user->email', '');";
+				 $sql1 = "INSERT INTO datadiri_alumni (email, nama, image, alamat, noHP, angkatan, lulusan, pekerjaan) VALUES ('$user->email', '$user->name', '$emailpic', '', '', '', '', '');";
+				 $sql2 = "INSERT INTO pekerjaan_alumni (email, namaPerusahaan, jenisPerusahaan) VALUES ('$user->email', '', '');";
+				 $sql3 = "INSERT INTO pendidikan_alumni (email, universitas, fakultas, jurusan, tahunMasuk) VALUES ('$user->email', '', '', '', '');";
+				 $sql4 = "INSERT INTO mediasosial_alumni (email, facebook, twitter, lineid, instagram, whatsapp, linkedin) VALUES ('$user->email', '', '', '', '', '', '');";
+				 mysqli_query($conn, $sql);
+				 mysqli_query($conn, $sql1);
+				 mysqli_query($conn, $sql2);
+				 mysqli_query($conn, $sql3);
+				 mysqli_query($conn, $sql4);
+				 $_SESSION['email'] = $user->email;
+				 $_SESSION['name'] = $user->name;
+				 echo "<script>window.location.href='view/user/profilePage.php'</script>";
+			 }
+	}
+    ?>
   </div>
 </div>
 
 <div id="id01" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-top">
-      <header class="w3-container w3-aqua"> 
-        <span onclick="document.getElementById('id01').style.display='none'" 
+      <header class="w3-container w3-aqua">
+        <span onclick="document.getElementById('id01').style.display='none'"
         class="w3-button w3-display-topright">&times;</span>
         <h2>Login</h2>
       </header>
@@ -193,8 +325,8 @@
   </div>
   <div id="id02" class="w3-modal">
     <div class="w3-modal-content w3-card-4 w3-animate-top">
-      <header class="w3-container w3-green"> 
-        <span onclick="document.getElementById('id02').style.display='none'; " 
+      <header class="w3-container w3-green">
+        <span onclick="document.getElementById('id02').style.display='none'; "
         class="w3-button w3-display-topright">&times;</span>
         <h2>Register</h2>
       </header>
@@ -255,15 +387,15 @@
 // use this instagram access token generator http://instagram.pixelunion.net/
 $access_token="1835721399.1677ed0.4d2b46aa4d284eb6b7da1a12afd6b7ce";
 $photo_count=4;
-     
+
 $json_link="https://api.instagram.com/v1/users/self/media/recent/?";
 $json_link.="access_token={$access_token}&count={$photo_count}";
 $json = file_get_contents($json_link);
 $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
-echo "";  
+echo "";
 foreach ($obj['data'] as $post) {
-     
+
     $pic_text=$post['caption']['text'];
     $pic_link=$post['link'];
     $pic_like_count=$post['likes']['count'];
@@ -271,8 +403,8 @@ foreach ($obj['data'] as $post) {
     $pic_src=str_replace("http://", "https://", $post['images']['standard_resolution']['url']);
     $pic_created_time=date("F j, Y", $post['caption']['created_time']);
     $pic_created_time=date("F j, Y", strtotime($pic_created_time . " +1 days"));
-     
-      echo "<div class='w3-quarter'>";  
+
+      echo "<div class='w3-quarter'>";
         echo "<a href='{$pic_link}' target='_blank'>";
             echo "<img class='img-responsive photo-thumb' style='width:100%' src='{$pic_src}' alt='{$pic_text}'>";
         echo "</a>";
@@ -285,7 +417,7 @@ foreach ($obj['data'] as $post) {
   </div>
 </div>
 
- 
+
 
 </div>
 
@@ -334,7 +466,7 @@ foreach ($obj['data'] as $post) {
   </div>
   <p>Copyright &copy; Kans NFBS 2018 </p>
 </footer>
- <script type="text/javascript" src="dist/index/js.js"></script> 
+ <script type="text/javascript" src="dist/index/js.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAc9pBfRDe2elx10Tm4wmsYhoBgTKjmG9k&callback=myMap"></script>
 </body>
 </html>

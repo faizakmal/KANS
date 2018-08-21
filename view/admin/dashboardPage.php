@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['name'])){
+if (!isset($_SESSION['email'])){
     header('Location:../../index.php');
-  }else if($_SESSION['name']!="admin"){
-        header('Location:../user/dashboardPage.php');
-  }
+  }else if($_SESSION['email']!="kansnfbs@gmail.com"){
+    header('Location:../user/dashboardPage.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['name'])){
         <li class="active"><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="dataPage.php"><i class="fa fa-search"></i> <span>Data Alumni</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>

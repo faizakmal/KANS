@@ -27,7 +27,8 @@ $email= $_GET['id'];
     mediasosial_alumni.whatsapp,
     mediasosial_alumni.linkedin,
     datadiri_alumni.tempat_lahir,
-    datadiri_alumni.tanggal_lahir
+    datadiri_alumni.tanggal_lahir,
+		user.name
 FROM
     user,
     datadiri_alumni,
@@ -39,7 +40,7 @@ WHERE
 
 	$result = mysqli_query($conn, $sql);
 	if ($data = mysqli_fetch_array ($result)) {
-		$email = $data[0]; 
+		$email = $data[0];
 		$name = $data[1];
 		$alamat = $data[2];
 		$noHP = $data[3];
@@ -49,10 +50,10 @@ WHERE
 		$image = $data[7];
 		$strata = $data[8];
 		$universitas = $data[9];
-		$fakultas = $data[10]; 
-		$jurusan = $data[11]; 
-		$tahunMasuk = $data[12]; 
-		$namaPerusahaan = $data[13]; 
+		$fakultas = $data[10];
+		$jurusan = $data[11];
+		$tahunMasuk = $data[12];
+		$namaPerusahaan = $data[13];
 		$jenisPerusahaan = $data[14];
 		$divisiPerusahaan = $data[15];
 		$tahunPerusahaan = $data[16];
@@ -64,14 +65,11 @@ WHERE
 		$linkedin = $data[22];
 		$tempatlahir = $data[23];
 		$tanggallahir = $data[24];
+		$namapanggilan = $data[25];
 	}
 
 	else {
-	
+
 	echo "data tidak ditemukan";
-	
+
 	}
-
-
-
-

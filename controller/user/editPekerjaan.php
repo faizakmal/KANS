@@ -23,4 +23,4 @@ else {
 }*/
 
 mysqli_query($conn, $sql);
-header("Location: ../../view/user/profilePage.php");
+header("Location: ../../view/user/profilePage.php?sukses=1");

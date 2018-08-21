@@ -66,7 +66,6 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
   $authUrl = $client->createAuthUrl();
 }
 
-
 //Display user info or display login url as per the info we have.
 echo '<div style="margin:20px">';
 if (isset($authUrl)){

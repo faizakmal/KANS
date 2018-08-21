@@ -62,7 +62,8 @@ include '../../controller/user/detail.php';
         <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -128,7 +129,7 @@ include '../../controller/user/detail.php';
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Pendidikan Terakhir</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
               <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
             </ul>
@@ -140,11 +141,20 @@ include '../../controller/user/detail.php';
                       <input type="hidden" class="form-control" name="inputEmail" disabled value= "<?php echo $email; ?>" >
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap" disabled value= "<?php echo $name; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan" disabled value= "<?php echo $namapanggilan; ?>" >
                     </div>
                   </div>
 
@@ -170,7 +180,7 @@ include '../../controller/user/detail.php';
                   </div>
 
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
+                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat Sekarang</label>
 
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputAlamat" placeholder="Alamat Lengkap"  disabled value= "<?php echo $alamat; ?>" >
@@ -330,9 +340,16 @@ include '../../controller/user/detail.php';
                   </div>
                   <div class="form-group">
                     <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
-
+                         <?php
+                            if ($whatsapp != ""){
+                                $hp = $whatsapp;
+                            }
+                            else{
+                                $hp = $noHP;
+                            }
+                        ?>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" disabled value=<?php echo $noHP; ?>>
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" disabled value=<?php echo $hp; ?>>
                     </div>
                   </div>
                   <div class="form-group">

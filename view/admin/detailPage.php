@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['name'])){
+if (!isset($_SESSION['email'])){
     header('Location:../../index.php');
-  }else if($_SESSION['name']!="admin"){
-        header('Location:../user/dashboardPage.php');
-  }
+  }else if($_SESSION['email']!="kansnfbs@gmail.com"){
+    header('Location:../user/dashboardPage.php');
+}
 include '../../controller/admin/detail.php';
 ?>
 <!DOCTYPE html>
@@ -63,7 +63,7 @@ include '../../controller/admin/detail.php';
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li class="active"><a href="dataPage.php"><i class="fa fa-search"></i> <span>Data Alumni</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -92,10 +92,9 @@ include '../../controller/admin/detail.php';
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Pendidikan Terakhir</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
               <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
-              <li><a href="#tab_5" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -105,6 +104,7 @@ include '../../controller/admin/detail.php';
                       <input type="hidden" class="form-control" name="inputEmail" value= "<?php echo $email; ?>" >
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
@@ -113,6 +113,13 @@ include '../../controller/admin/detail.php';
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan"  value= "<?php echo $namapanggilan; ?>" >
+                    </div>
+                  </div>
 
                   <div class="form-group">
                     <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
@@ -136,7 +143,7 @@ include '../../controller/admin/detail.php';
                   </div>
 
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
+                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat Sekarang</label>
 
                     <div class="col-sm-10">
                        <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
@@ -329,9 +336,16 @@ include '../../controller/admin/detail.php';
                   </div>
                   <div class="form-group">
                     <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
-
+                        <?php
+                            if ($whatsapp != ""){
+                                $hp = $whatsapp;
+                            }
+                            else{
+                                $hp = $noHP;
+                            }
+                        ?>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $noHP; ?>>
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $hp; ?>>
                     </div>
                   </div>
                   <div class="form-group">
@@ -344,34 +358,6 @@ include '../../controller/admin/detail.php';
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success" onclick='return checkInput()'>Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-             <div class="tab-pane" id="tab_5">
-                <form class="form-horizontal" method="POST" action="../../controller/admin/editSettings.php">
-                  <div class="form-group">
-                    <div class="col-sm-10">
-                     <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputPassword" placeholder="Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputReTypePassword" class="col-sm-2 control-label">ReType Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputReTypePassword" placeholder="ReType Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger" onclick='return checkInput()'>Submit</button>
                     </div>
                   </div>
                 </form>

@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['name'])){
+if (!isset($_SESSION['email'])){
     header('Location:../../index.php');
-  }else if($_SESSION['name']!="admin"){
-        header('Location:../user/dashboardPage.php');
-  }
+  }else if($_SESSION['email']!="kansnfbs@gmail.com"){
+    header('Location:../user/dashboardPage.php');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['name'])){
         <li><a href="dashboardPage.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li class="active"><a href="dataPage.php"><i class="fa fa-search"></i> <span>Data Alumni</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -85,8 +85,6 @@ if (!isset($_SESSION['name'])){
 		  </div>
   		  <div class="box-body">
 			<div class="box-tools pull-right">
-			  <button type="button" class="btn btn-box-tool" title="Tambah Alumni" data-toggle="modal" data-target="#modal-default">
-			  <i class="fa fa-plus"></i></button>
 			  <button type="button" class="btn btn-box-tool" title="Print" data-toggle="tooltip" id="myBtn">
 			  <i class="fa fa-print"></i></button>
 			  <script>
@@ -96,50 +94,6 @@ if (!isset($_SESSION['name'])){
 				});
 			  </script>
 			</div>
-
-			<form class="form-horizontal" method="post" action="../../controller/admin/tambahAlumni.php">
-			<div class="modal fade" id="modal-default">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Tambah Alumni</h4>
-				  </div>
-				  <div class="modal-body">
-					 <div class="form-group">
-						<label for="inputEmail" class="col-sm-3 control-label">Email</label>
-						<div class="col-sm-9">
-						  <input type="text" class="form-control" name="inputEmail" >
-						</div>
-					  </div>
-					 <div class="form-group">
-					   <label for="inputPassword" class="col-sm-3 control-label">Password</label>
-					   <div class="col-sm-9">
-						 <input type="password" class="form-control" name="inputPassword" >
-					   </div>
-					 </div>
-					 <div class="form-group">
-					   <label for="inputRePassword" class="col-sm-3 control-label">ReType Password</label>
-					   <div class="col-sm-9">
-						 <input type="password" class="form-control" name="inputReTypePassword" >
-					   </div>
-					 </div>
-					 <div class="form-group">
-					   <label for="inputNama" class="col-sm-3 control-label">Nama Lengkap</label>
-					   <div class="col-sm-9">
-						 <input type="text" class="form-control" name="inputNama" >
-					   </div>
-					 </div>
-				  </div>
-				  <div class="modal-footer">
-					  <button type="submit" class="btn btn-success" name="tambah" id="tambah">Tambah</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			</form>
 
 		  </div>
             <div class="table-responsive">
