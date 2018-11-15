@@ -100,6 +100,7 @@ if (!isset($_SESSION['email'])){
           	<table id="example1" class="table table-bordered table-striped">
               	<thead>
                   <tr>
+                    <th></th>
                     <th>No</th>
                     <th>Email</th>
                     <th>Nama</th>

@@ -6,6 +6,9 @@ if (!isset($_SESSION['email'])){
     header('Location:../user/dashboardPage.php');
 }
 include '../../controller/admin/detail.php';
+//BUAT CONECT KE DATABASE, FUNGSINYA UNTUK MENGAMBIL DATA PROVINSI
+include '../../database/connect.php';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,9 +18,82 @@ include '../../controller/admin/detail.php';
   <title>KANS NFBS | Admin</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!--Script For Autocomplete Input Alamat-->
+  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
   <?php
   	include "../../dist/admin/style.php"
   ?>
+  <!--SCRIPT KETIKA DOKUMEN/PAGE READY-->
+  <script type="text/javascript">
+  $( document ).ready(function() {
+    //STORE DATA PHP (DARI CONTROLER) KE VARIABEL JAVASCRIPT
+    var tempProvinsi = "<?php echo $provinsi?>";
+    var tempKabupaten = "<?php echo $kabupaten?>";
+    var tempKecamatan = "<?php echo $kecamatan?>";
+    //INI MAH TEST AJA
+    var temp = "Provinsi : "+tempProvinsi+" Kabupaten: "+tempKabupaten+" Kecamatan: "+tempKecamatan;
+    console.log(temp);
+    //FUNGSI INI UNTUK PENGECEKAN, APAKAH DATA ALAMAT SUDAH ADA APA BELUM
+    //JIKA SUDAH MAKA AKAN DI TAMPILKAN SEMUA
+    //JIKA BELUM YANG BISA DI EDIT HANYA PROVINSI DULU
+    if(tempProvinsi != ""){
+        //INI STATE KETIKA PROVINSI SUDAH MEMPUNYAIN NILAI
+        //MAKA <DIV> YANG ISI INPUT UNTUK DROPDOWN KABUPATEN MUNCUL
+        document.getElementById("divKabupaten").style.display = "block";
+        //SETELAH DI MUNCULKAN MAKA SELANJUTNYA ADALAH MEMBERI DROPDOWN TERSEBUT NILAI
+        //DI PANGGIL DULU DENGAN ID YANG TELAH DI SET
+        let dropdown = $('#myKabupaten');
+        var picked = 0;
+        //DI KOSONGKAN
+        dropdown.empty();
+        //INI UNTUK ISI KE-0 DAN DI ATUR AGAR TIDAK BISA DI PILIH                        
+        dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+        //INI FUNGSI UNTUK MEMANGGIL JSON YANG TELAH DI PROGRAM DI PHP GETDATA DENGAN MEMBERIKAN ID PROVINSI
+        $.getJSON('http://kansnfbs.com/controller/admin/getData.php?province='+tempProvinsi, function (data) {
+            //INI KAYAK FETCH DATABASE, TAPI BUAT JSON DI JAVASCRIPT
+            $.each(data, function (key, entry) {
+                //SET ISI DROPDOWN
+                dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                //KETIKA ID KABUPATEN YANG TALAH ADA DI DATABASE USER == ID YANG ADA PADA JSON MAKA KITA AMBIL (KEY)
+                if(tempKabupaten == entry.ID) picked = key;
+            })
+            //SETELAH ITU JADIKAN KEY YANG TADI MENJADI SELECTED INDEX PADA DROPDOWN + 1 KARENA SUDAH ADA DATA KE-0 TADI
+            dropdown.prop('selectedIndex', picked+1);
+        });
+        //PENGECEKAN APABILA KABUPATEN BELUM ADA DI DATABASE USER
+        if(tempKabupaten != ""){
+            //LALU PENJELASAANNYA SAMA KAYAK YANG DI ATAS
+            document.getElementById("divKecamatan").style.display = "block";
+            
+            let dropdown = $('#myKecamatan');
+            var picked = 0;
+            dropdown.empty();
+                                    
+            dropdown.append('<option selected="true" disabled>Pilih Kecamatan</option>');
+            
+            $.getJSON('http://kansnfbs.com/controller/admin/getData.php?kabupaten='+tempKabupaten, function (data) {
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                    if(tempKecamatan == entry.ID) picked = key;
+                })
+                dropdown.prop('selectedIndex', picked+1);
+            });
+            //INI JUGA SAMA
+            if(tempKecamatan != ""){
+                
+                document.getElementById("inputAlamat").disabled = false;
+                //KLO INI BUAT ENABLE EDITING DI ALAMAT
+            }else document.getElementById("inputAlamat").disabled = true;
+        }else document.getElementById("divKecamatan").style.display = "none";
+    }else{
+        //KLO INI KEDETEK BLUM DI ISI SEMUA
+        document.getElementById("divKabupaten").style.display = "none";
+        document.getElementById("divKecamatan").style.display = "none";
+        document.getElementById("inputAlamat").disabled = true;
+    }
+  });
+  </script>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
@@ -109,15 +185,15 @@ include '../../controller/admin/detail.php';
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap"  value= "<?php echo $name; ?>" >
+                      <input type="text" class="form-control" id="inputNama" name="inputNama" placeholder="Nama Lengkap"  value= "<?php echo $name; ?>" >
                     </div>
                   </div>
-
+                    
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan"  value= "<?php echo $namapanggilan; ?>" >
+                      <input type="text" class="form-control" id="inputNamaPanggilan" name="inputNamaPanggilan" placeholder="Nama Panggilan"  value= "<?php echo $namapanggilan; ?>" >
                     </div>
                   </div>
 
@@ -125,7 +201,7 @@ include '../../controller/admin/detail.php';
                     <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputTempatLahir" placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
+                      <input type="text" class="form-control" id="inputTempatLahir" name="inputTempatLahir" placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
                     </div>
                   </div>
 
@@ -137,38 +213,135 @@ include '../../controller/admin/detail.php';
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="date" class="form-control pull-right" name="datepicker" value="<?php echo $tanggallahir; ?>">
+                        <input type="date" class="form-control pull-right" id="datepicker" name="datepicker" value="<?php echo $tanggallahir; ?>">
                       </div>
                     </div>
                   </div>
-
+                  <!--FORM PENGISIAN ALAMAT-->
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat Sekarang</label>
-
-                    <div class="col-sm-10">
-                       <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  value= "<?php echo $alamat; ?>" >
+                      <label for="inputAlamat" class="col-sm-2 control-label"></label>
+                     <div class="col-sm-10">
+                       <a>Inputkan alamat tempat tinggal anda sekarang</a>
                     </div>
                   </div>
+                  
+                  <div class="form-group">
+                    <label for="inputProvinsi" class="col-sm-2 control-label">Provinsi</label>
+                    <!--MEMAKAI ONCHANGE AGAR JIKA NILAI BERUBAH MAKA NILAI DROPDOWN LAIN BISA BERUBAH-->
+                    <div id="divProvinsi" class="col-sm-10">
+                        <select id="myProvince" onchange="myProvinceS()" class="form-control select2" placeholder="Provinsi" name="inputProvinsi" style="width: 100%;">
+                            <?php
+                            //DISINI MENGGUNAKAN PHP KARENA EMANG DROPDOWN UNTUK MILIH PROVINSI UDAH DI BUKA(VISIBLE)
+                                $sql =  "SELECT * FROM `provinces` ORDER BY name";
+                                $result = mysqli_query($conn, $sql);
+                                if($provinsi == null) echo "<option value ="."Pilih Provinsi"." selected disabled>"."Pilih Provinsi"."</option>";
+                                while($data = mysqli_fetch_array($result)){
+                                    if($data[0] == $provinsi){
+                                      echo "<option value =".$data['0']." selected>".$data[1]."</option>";
+                                    } 
+                                    else echo "<option value =".$data['0'].">".$data[1]."</option>";
+                                }
+                            ?>
+                      </select>
+                        <script>
+                        //INI FUNGSI ONCHANGE NYA YANG DIATAS
+                            function myProvinceS() {
+                                
+                                document.getElementById("divKabupaten").style.display = "block";
+                                document.getElementById("divKecamatan").style.display = "none";
+                                document.getElementById("inputAlamat").disabled = true;
+                                var province = document.getElementById("myProvince").value;
+                                let dropdown = $('#myKabupaten');
+
+                                dropdown.empty();
+                                
+                                dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+                                dropdown.prop('selectedIndex', 0);
+                                $.getJSON('http://kansnfbs.com/controller/admin/getData.php?province='+province, function (data) {
+                                  $.each(data, function (key, entry) {
+                                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                                  })
+                                });
+                    
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  
+                  <div id="divKabupaten" class="form-group">
+                    <label for="inputKabupaten" class="col-sm-2 control-label">Kota/Kabupaten</label>
+
+                    <div class="col-sm-10">
+                        <select id="myKabupaten" onchange="myKabupatenS()" class="form-control select2" placeholder="Kabupaten" name="inputKabupaten" style="width: 100%;">
+                            
+                      </select>
+                      <script>
+                            function myKabupatenS() {
+                                document.getElementById("divKecamatan").style.display = "block";
+                                document.getElementById("inputAlamat").disabled = true;
+                                var kabupaten = document.getElementById("myKabupaten").value;
+                                let dropdown = $('#myKecamatan');
+
+                                dropdown.empty();
+                                
+                                dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+                                dropdown.prop('selectedIndex', 0);
+                                $.getJSON('http://kansnfbs.com/controller/admin/getData.php?kabupaten='+kabupaten, function (data) {
+                                  $.each(data, function (key, entry) {
+                                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                                  })
+                                });
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  
+                  <div id="divKecamatan" class="form-group">
+                    <label for="inputAlamat" class="col-sm-2 control-label">Kecamatan</label>
+
+                    <div class="col-sm-10">
+                        <select id="myKecamatan" onchange="myKecamatanS()" class="form-control select2" placeholder="Provinsi" name="inputKecamatan" style="width: 100%;">
+                            <option selected="selected"><?php echo $kota; ?></option>
+                            
+                      </select>
+                      <script>
+                            function myKecamatanS() {
+                                document.getElementById("divKecamatan").style.display = "block";
+                                document.getElementById("inputAlamat").disabled = false;
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="inputAlamat" class="col-sm-2 control-label">Detail Alamat</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputAlamat" name="inputAlamat" placeholder="Detail Alamat (Nama Jalan, Nomor Rumah)"  value= "<?php echo $alamat; ?>" >
+                    </div>
+                  </div>
+                <!--END INPUT ALAMAT-->
                   <div class="form-group">
                     <label for="inputNoHP" class="col-sm-2 control-label">Nomor HP</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputNoHP" placeholder="NoHP"  value= "<?php echo $noHP; ?>" >
+                      <input type="text" class="form-control" id="inputNoHP" name="inputNoHP" placeholder="NoHP"  value= "<?php echo $noHP; ?>" >
                     </div>
                   </div>
+                  
                   <div class="form-group">
                     <label for="inputAngkatan" class="col-sm-2 control-label">Angkatan</label>
 
                     <div class="col-sm-10">
 
-                      <input type="text" class="form-control" name="inputAngkatan" placeholder="Angkatan (Angka)"  value="<?php echo $angkatan; ?>" >
+                      <input type="text" class="form-control" id="inputAngkatan" name="inputAngkatan" placeholder="Angkatan (Angka)"  value="<?php echo $angkatan; ?>" >
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputLulusan" class="col-sm-2 control-label">Lulusan</label>
 
                     <div class="col-sm-10">
-                        <select class="form-control select2" name="inputLulusan" style="width: 100%;">
+                        <select class="form-control select2" id="inputLulusan" name="inputLulusan" style="width: 100%;">
                             <option selected="selected"><?php echo $lulusan; ?></option>
                             <option>SMP</option>
                             <option>SMA</option>
@@ -180,7 +353,7 @@ include '../../controller/admin/detail.php';
                     <label for="inputPekerjaan" class="col-sm-2 control-label">Pekerjaan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputPekerjaan" placeholder="Pekerjaan" value= "<?php echo $pekerjaan; ?>" >
+                      <input type="text" class="form-control" id="inputPekerjaan" name="inputPekerjaan" placeholder="Pekerjaan" value= "<?php echo $pekerjaan; ?>" >
                     </div>
                   </div>
                   <div class="form-group">
@@ -372,9 +545,12 @@ include '../../controller/admin/detail.php';
       </div>
     </section>
   </div>
+    </section>
+  </div>
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
+  </div>
     <?php
   	include "../../dist/admin/js.php"
   ?>

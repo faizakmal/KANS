@@ -16,10 +16,10 @@
 <?php
 	session_start(); //session start
     $_SESSION['LAST_ACTIVITY'] = time();
-
+    
     if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
     // last request was more than 30 minutes ago
-        session_unset();     // unset $_SESSION variable for the run-time
+        session_unset();     // unset $_SESSION variable for the run-time 
         session_destroy();   // destroy session data in storage
     }
     if($_SESSION['last_session_request'] > time() - 2){
@@ -27,16 +27,16 @@
     header("location: http://kansnfbs.com/");
     exit;
 }
-
+    
 	include 'database/connect.php';
 	require_once ('libraries/Google/autoload.php');
-
+    
 	//****************************GOOGLE API***************************
 	//Insert your cient ID and secret
 	//You can get it from : https://console.developers.google.com/
-	$client_id = '145984459227-58e7qurq8j25eq35j7o78rjdu62j7ffr.apps.googleusercontent.com';
-	$client_secret = 'zQHs89SKIhjDrbQ0qtssNUVx';
-	$redirect_uri = 'http://localhost/kans/';
+	$client_id = '986913153276-cabpoa6h8s1j44evquc7v27abpf4tif1.apps.googleusercontent.com';
+	$client_secret = 'h_CNIYbx4T5yfpHOxnxzXG5S';
+	$redirect_uri = 'http://kansnfbs.com/';
 
 	if (isset($_GET['logout'])) {
 	  unset($_SESSION['access_token']);
@@ -67,18 +67,17 @@
 	////**************************MAPS//**************************
 	$temp;
 
-	$proviceArr = array("ACEH", "EAST KALIMANTAN", "CENTRAL JAVA", "BENGKULU", "BANTEN"
-					   ,"WEST KALIMANTAN","BANGKA BELITUNG","BALI","EAST JAVA","SOUTH KALIMANTAN"
-					   ,"EAST NUSA TENGGARA","SOUTH SULAWESI","RIAU ISLANDS","IRIAN JAYA", "NORTH SUMATRA"
-					   ,"RIAU","NORTH SULAWESI","NORTH MALUKU","WEST SUMATRA","MALUKU","WEST NUSA TENGGARA"
-					   ,"SOUTH EAST SULAWESI","CENTRAL SULAWESI","PAPUA","WEST JAVA","LAMPUNG","JAKARTA"
-					   ,"GORONTALO","YOGYAKARTA","CENTRAL KALIMANTAN","SOUTH SUMATRA","WEST SULAWESI"
-					   ,"JAMBI");
+	$proviceArr = array("11","64","33","17","36"
+					   ,"61","19","51","35","63"
+					   ,"53","73","21","91", "12"
+					   ,"14","71","82","13","81","52"
+					   ,"74","72","94","32","18","31"
+					   ,"75","34","62","16","76"
+					   ,"15");
 	$sumArr = count($proviceArr);
 	for($a = 0; $a < $sumArr; $a++){
-		//getCount($proviceArr[$a]);
 		$nameProvince = $proviceArr[$a];
-		$sql = "SELECT COUNT(datadiri_alumni.alamat) FROM datadiri_alumni WHERE datadiri_alumni.alamat LIKE '%$nameProvince%'";
+		$sql = "SELECT COUNT(datadiri_alumni.provinsi) FROM datadiri_alumni WHERE datadiri_alumni.provinsi=$nameProvince";
 		$result = mysqli_query($conn, $sql);
 		if ($data = mysqli_fetch_array ($result))
 			$temp = $data[0];
@@ -262,7 +261,7 @@
 		//check if user exist in database using COUNT
 		$result = $conn->query("SELECT COUNT(email) as usercount FROM user WHERE email='$user->email'");
 		$user_count = $result->fetch_object()->usercount; //will return 0 if user doesn't exist
-
+		
 		//admin
 			if($user->email == "kansnfbs@gmail.com"){
 				$_SESSION['email'] = $user->email;

@@ -4,6 +4,7 @@ if (!isset($_SESSION['name'])){
     header('Location:../../index.php');
   }
 include '../../controller/user/detail.php';
+include '../../database/connect.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,61 @@ include '../../controller/user/detail.php';
    <?php
     include "../../dist/admin/style.php"
   ?>
+   <script type="text/javascript">
+    $( document ).ready(function() {
+        var tempProvinsi = "<?php echo $provinsi?>";
+        var tempKabupaten = "<?php echo $kabupaten?>";
+        var tempKecamatan = "<?php echo $kecamatan?>";
+        var temp = "Provinsi : "+tempProvinsi+" Kabupaten: "+tempKabupaten+" Kecamatan: "+tempKecamatan;
+        console.log("wtf");
+        if(tempProvinsi != ""){
+            
+            document.getElementById("divKabupaten").style.display = "block";
+            
+            let dropdown = $('#myKabupaten');
+            var picked = 0;
+            dropdown.empty();
+                                    
+            dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+            
+            $.getJSON('http://kansnfbs.com/view/user/getData.php?province='+tempProvinsi, function (data) {
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                    if(tempKabupaten == entry.ID) picked = key;
+                })
+                dropdown.prop('selectedIndex', picked+1);
+            });
+            
+            if(tempKabupaten != ""){
+                
+                document.getElementById("divKecamatan").style.display = "block";
+                
+                let dropdown = $('#myKecamatan');
+                var picked = 0;
+                dropdown.empty();
+                                        
+                dropdown.append('<option selected="true" disabled>Pilih Kecamatan</option>');
+                
+                $.getJSON('http://kansnfbs.com/view/user/getData.php?kabupaten='+tempKabupaten, function (data) {
+                    $.each(data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                        if(tempKecamatan == entry.ID) picked = key;
+                    })
+                    dropdown.prop('selectedIndex', picked+1);
+                });
+                if(tempKecamatan != ""){
+                    
+                    document.getElementById("inputAlamat").disabled = false;
+                }else document.getElementById("inputAlamat").disabled = true;
+            }else document.getElementById("divKecamatan").style.display = "none";
+        }else{
+            
+            document.getElementById("divKabupaten").style.display = "none";
+            document.getElementById("divKecamatan").style.display = "none";
+            document.getElementById("inputAlamat").disabled = true;
+        }
+    });
+  </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
