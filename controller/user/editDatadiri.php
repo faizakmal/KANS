@@ -5,7 +5,10 @@ include '../../database/connect.php';
 $email   		   =  $_POST['inputEmail'];
 $nickname			 =  $_POST['inputNamaPanggilan'];
 $nama 	 		   =  $_POST['inputNama'];
-$alamat   		 =  $_POST['inputAlamat'];
+$provinsi        =  $_POST['inputProvinsi'];
+$kabupaten       =  $_POST['inputKabupaten'];
+$kecamatan       =  $_POST['inputKecamatan'];
+$alamat          =  $_POST['inputAlamat'];
 $noHP 	   		 =  $_POST['inputNoHP'];
 $angkatan  		 =  $_POST['inputAngkatan'];
 $lulusan  		 =  $_POST['inputLulusan'];
@@ -46,7 +49,7 @@ if ($_FILES['imageupload' ] ['error'] != 4){
 		move_uploaded_file($_FILES['imageupload']['tmp_name'], $target);
 		chmod($target, 0755);
 		$sql = "UPDATE datadiri_alumni
-				SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
+				SET nama = '$nama', image = '$newname', provinsi = '$provinsi', kabupaten = '$kabupaten', kecamatan = '$kecamatan', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
 				where
 				email = '$email' ";
 	  $sql2 = "UPDATE user	SET name = '$nickname' where email = '$email' ";
@@ -57,7 +60,7 @@ if ($_FILES['imageupload' ] ['error'] != 4){
 	}
 }else{
 	$sql = "UPDATE datadiri_alumni
-			SET nama = '$nama', image = '$newname', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
+			SET nama = '$nama', image = '$newname', provinsi = '$provinsi', kabupaten = '$kabupaten', kecamatan = '$kecamatan', alamat = '$alamat', noHP = '$noHP', angkatan = '$angkatan', lulusan = '$lulusan', pekerjaan = '$pekerjaan', tempat_lahir = '$tempatlahir', tanggal_lahir = '$date'
 			where
 			email = '$email' ";
 	$sql2 = "UPDATE user	SET name = '$nickname' where email = '$email' ";

@@ -3,7 +3,8 @@
 include '../../database/connect.php';
 $email = $_SESSION['email'];
 
-	$sql = "SELECT
+$sql = "
+SELECT
     datadiri_alumni.email,
     datadiri_alumni.nama,
     datadiri_alumni.alamat,
@@ -29,7 +30,10 @@ $email = $_SESSION['email'];
     mediasosial_alumni.linkedin,
     datadiri_alumni.tempat_lahir,
     datadiri_alumni.tanggal_lahir,
-		user.name
+	user.name,
+	datadiri_alumni.provinsi,
+    datadiri_alumni.kabupaten,
+    datadiri_alumni.kecamatan
 FROM
     user,
     datadiri_alumni,
@@ -39,39 +43,60 @@ FROM
 WHERE
     datadiri_alumni.email = user.email AND pendidikan_alumni.email = user.email AND pekerjaan_alumni.email = user.email AND mediasosial_alumni.email = user.email AND user.email = '$email'";
 
-	$result = mysqli_query($conn, $sql);
-	if ($data = mysqli_fetch_array ($result)) {
+$result = mysqli_query($conn, $sql);
+if ($data = mysqli_fetch_array ($result)) {
+	$email = $data[0];
+	$name = $data[1];
+	$alamat = $data[2];
+	$noHP = $data[3];
+	$angkatan = $data[4];
+	$lulusan = $data[5];
+	$pekerjaan = $data[6];
+	$image = $data[7];
+	$strata = $data[8];
+	$universitas = $data[9];
+	$fakultas = $data[10];
+	$jurusan = $data[11];
+	$tahunMasuk = $data[12];
+	$namaPerusahaan = $data[13];
+	$jenisPerusahaan = $data[14];
+	$divisiPerusahaan = $data[15];
+	$tahunPerusahaan = $data[16];
+	$facebook = $data[17];
+	$twitter = $data[18];
+	$line = $data[19];
+	$instagram = $data[20];
+	$whatsapp = $data[21];
+	$linkedin = $data[22];
+	$tempatlahir = $data[23];
+	$tanggallahir = $data[24];
+	$namapanggilan = $data[25];
+	$provinsi = $data[26];
+	$kabupaten = $data[27];
+	$kecamatan = $data[28];
+}else {
 
-		$email = $data[0];
-		$name = $data[1];
-		$alamat = $data[2];
-		$noHP = $data[3];
-		$angkatan = $data[4];
-		$lulusan = $data[5];
-		$pekerjaan = $data[6];
-		$image = $data[7];
-		$strata = $data[8];
-		$universitas = $data[9];
-		$fakultas = $data[10];
-		$jurusan = $data[11];
-		$tahunMasuk = $data[12];
-		$namaPerusahaan = $data[13];
-		$jenisPerusahaan = $data[14];
-		$divisiPerusahaan = $data[15];
-		$tahunPerusahaan = $data[16];
-		$facebook = $data[17];
-		$twitter = $data[18];
-		$line = $data[19];
-		$instagram = $data[20];
-		$whatsapp = $data[21];
-		$linkedin = $data[22];
-		$tempatlahir = $data[23];
-		$tanggallahir = $data[24];
-		$namapanggilan = $data[25];
-	}
+echo "data tidak ditemukan";
 
-	else {
+}
 
-	echo "data tidak ditemukan";
+$sql2="
+    SELECT
+        provinces.name AS provinsi,
+        regencies.name AS kabupaten,
+        districts.name AS kecamatan
+    FROM
+        `datadiri_alumni`
+    INNER JOIN provinces ON datadiri_alumni.provinsi = provinces.id
+    INNER JOIN regencies ON datadiri_alumni.kabupaten = regencies.id
+    INNER JOIN districts ON datadiri_alumni.kecamatan = districts.id
+    WHERE
+        datadiri_alumni.email = '$email'";
+$result = mysqli_query($conn, $sql2);
+if ($data = mysqli_fetch_array ($result)) {
+	$alamatPro = $data[0];
+	$alamatKab = $data[1];
+	$alamatKec = $data[2];
+	$alamats = $alamat.", ".$alamatKec.", ".$alamatKab.", ".$alamatPro;
+}
 
-	}

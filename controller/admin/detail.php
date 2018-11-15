@@ -30,7 +30,10 @@ $sql = "SELECT
     mediasosial_alumni.linkedin,
     datadiri_alumni.tempat_lahir,
     datadiri_alumni.tanggal_lahir,
-    user.name
+    user.name,
+    datadiri_alumni.provinsi,
+    datadiri_alumni.kabupaten,
+    datadiri_alumni.kecamatan
 FROM
     user,
     datadiri_alumni,
@@ -68,6 +71,9 @@ WHERE
 		$tempatlahir = $data[23];
 		$tanggallahir = $data[24];
 		$namapanggilan = $data[25];
+		$provinsi = $data[26];
+		$kabupaten = $data[27];
+		$kecamatan = $data[28];
 	}
 
 	else {

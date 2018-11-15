@@ -28,7 +28,10 @@ $email= $_GET['id'];
     mediasosial_alumni.linkedin,
     datadiri_alumni.tempat_lahir,
     datadiri_alumni.tanggal_lahir,
-		user.name
+		user.name,
+	datadiri_alumni.provinsi,
+    datadiri_alumni.kabupaten,
+    datadiri_alumni.kecamatan
 FROM
     user,
     datadiri_alumni,
@@ -66,6 +69,9 @@ WHERE
 		$tempatlahir = $data[23];
 		$tanggallahir = $data[24];
 		$namapanggilan = $data[25];
+		$provinsi = $data[26];
+		$kabupaten = $data[27];
+		$kecamatan = $data[28];
 	}
 
 	else {
@@ -73,3 +79,24 @@ WHERE
 	echo "data tidak ditemukan";
 
 	}
+
+$sql2="
+    SELECT
+        provinces.name AS provinsi,
+        regencies.name AS kabupaten,
+        districts.name AS kecamatan
+    FROM
+        `datadiri_alumni`
+    INNER JOIN provinces ON datadiri_alumni.provinsi = provinces.id
+    INNER JOIN regencies ON datadiri_alumni.kabupaten = regencies.id
+    INNER JOIN districts ON datadiri_alumni.kecamatan = districts.id
+    WHERE
+        datadiri_alumni.email = '$email'";
+$result = mysqli_query($conn, $sql2);
+if ($data = mysqli_fetch_array ($result)) {
+	$alamatPro = $data[0];
+	$alamatKab = $data[1];
+	$alamatKec = $data[2];
+	$alamat = $alamat.", ".$alamatKec.", ".$alamatKab.", ".$alamatPro;
+}
+
