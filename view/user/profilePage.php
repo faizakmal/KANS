@@ -1,9 +1,16 @@
 <?php
+if($_GET['refresh'] == 1){
+	echo "<script>window.location.href='../../view/user/profilePage.php'</script>";
+}
+
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 include '../../controller/user/profile.php';
+include '../../database/connect.php';
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,9 +20,67 @@ include '../../controller/user/profile.php';
   <title>KANS NFBS | Profile</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!--Script For Autocomplete Input Alamat-->
+  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
   <?php
     include "../../dist/user/style.php"
   ?>
+  <script type="text/javascript">
+  $( document ).ready(function() {
+    var tempProvinsi = "<?php echo $provinsi?>";
+    var tempKabupaten = "<?php echo $kabupaten?>";
+    var tempKecamatan = "<?php echo $kecamatan?>";
+    var temp = "Provinsi : "+tempProvinsi+" Kabupaten: "+tempKabupaten+" Kecamatan: "+tempKecamatan;
+    console.log(temp);
+    if(tempProvinsi != ""){
+        
+        document.getElementById("divKabupaten").style.display = "block";
+        
+        let dropdown = $('#myKabupaten');
+        var picked = 0;
+        dropdown.empty();
+                                
+        dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+        
+        $.getJSON('http://kansnfbs.com/controller/user/getData.php?province='+tempProvinsi, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                if(tempKabupaten == entry.ID) picked = key;
+            })
+            dropdown.prop('selectedIndex', picked+1);
+        });
+        
+        if(tempKabupaten != ""){
+            
+            document.getElementById("divKecamatan").style.display = "block";
+            
+            let dropdown = $('#myKecamatan');
+            var picked = 0;
+            dropdown.empty();
+                                    
+            dropdown.append('<option selected="true" disabled>Pilih Kecamatan</option>');
+            
+            $.getJSON('http://kansnfbs.com/controller/user/getData.php?kabupaten='+tempKabupaten, function (data) {
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                    if(tempKecamatan == entry.ID) picked = key;
+                })
+                dropdown.prop('selectedIndex', picked+1);
+            });
+            if(tempKecamatan != ""){
+                
+                document.getElementById("inputAlamat").disabled = false;
+            }else document.getElementById("inputAlamat").disabled = true;
+        }else document.getElementById("divKecamatan").style.display = "none";
+    }else{
+        
+        document.getElementById("divKabupaten").style.display = "none";
+        document.getElementById("divKecamatan").style.display = "none";
+        document.getElementById("inputAlamat").disabled = true;
+    }
+  });
+  </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -52,7 +117,7 @@ include '../../controller/user/profile.php';
           <img src="../../dist/userpicture/<?php echo $image?>" style="width: 36px; height: 36px; border-radius: 50%;" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo $name; ?></p>
+          <p><?php echo $_SESSION['name']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -62,11 +127,31 @@ include '../../controller/user/profile.php';
         <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li class="active"><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
+  
   <div class="content-wrapper">
+         <?php
+        if($_GET['sukses'] == 1){
+    ?>
+    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+                Data Berhasil Diupdate 
+    </div>
+    <?php
+        }
+    ?>
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+            });
+        }, 1500);
+    </script>
     <section class="content-header">
       <h1>Profil</h1>
       <ol class="breadcrumb">
@@ -107,7 +192,7 @@ include '../../controller/user/profile.php';
             <!-- /.box-header -->
             <div class="box-body">
               <strong><i class="fa fa-map-marker margin-r-5"></i>Alamat</strong>
-              <p class="text-muted"><?php echo $alamat; ?></p>
+              <p class="text-muted"><?php echo $alamats; ?></p>
 
               <hr>
 
@@ -127,10 +212,9 @@ include '../../controller/user/profile.php';
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Pendidikan Terakhir</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
               <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
-              <li><a href="#tab_5" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -148,12 +232,129 @@ include '../../controller/user/profile.php';
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap"  value= "<?php echo $name; ?>" >
                     </div>
                   </div>
+
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
+                    <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputAlamat" id="autocomplete" placeholder="Alamat Lengkap"  onfocus="OnFocusInput(this)" onblur="OnBlurInput(this)" value= "<?php echo $alamat; ?>" >
-                      <p id="demo" style="color:red";></p>
+                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan"  value= "<?php echo $namapanggilan; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputTempatLahir" placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
+
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" class="form-control pull-right" name="datepicker" value="<?php echo $tanggallahir; ?>">
+                      </div>
+                    </div>
+                  </div>
+                    <div class="form-group">
+                      <label for="inputAlamat" class="col-sm-2 control-label"></label>
+                     <div class="col-sm-10">
+                       <a>Inputkan alamat tempat tinggal anda sekarang</a>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <label for="inputProvinsi" class="col-sm-2 control-label">Provinsi</label>
+
+                    <div id="divProvinsi" class="col-sm-10">
+                        <select id="myProvince" onchange="myProvinceS()" class="form-control select2" placeholder="Provinsi" name="inputProvinsi" style="width: 100%;">
+                            <?php
+                                $sql =  "SELECT * FROM `provinces` ORDER BY name";
+                                $result = mysqli_query($conn, $sql);
+                                if($provinsi == null) echo "<option value ="."Pilih Provinsi"." selected disabled>"."Pilih Provinsi"."</option>";
+                                while($data = mysqli_fetch_array($result)){
+                                    if($data[0] == $provinsi){
+                                      echo "<option value =".$data['0']." selected>".$data[1]."</option>";
+                                    } 
+                                    else echo "<option value =".$data['0'].">".$data[1]."</option>";
+                                }
+                            ?>
+                      </select>
+                        <script>
+                            function myProvinceS() {
+                                document.getElementById("divKabupaten").style.display = "block";
+                                document.getElementById("divKecamatan").style.display = "none";
+                                document.getElementById("inputAlamat").disabled = true;
+                                var province = document.getElementById("myProvince").value;
+                                let dropdown = $('#myKabupaten');
+
+                                dropdown.empty();
+                                
+                                dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+                                dropdown.prop('selectedIndex', 0);
+                                $.getJSON('http://kansnfbs.com/controller/user/getData.php?province='+province, function (data) {
+                                  $.each(data, function (key, entry) {
+                                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                                  })
+                                });
+                    
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  <div id="divKabupaten" class="form-group">
+                    <label for="inputKabupaten" class="col-sm-2 control-label">Kota/Kabupaten</label>
+
+                    <div class="col-sm-10">
+                        <select id="myKabupaten" onchange="myKabupatenS()" class="form-control select2" placeholder="Kabupaten" name="inputKabupaten" style="width: 100%;">
+                            
+                      </select>
+                      <script>
+                            function myKabupatenS() {
+                                document.getElementById("divKecamatan").style.display = "block";
+                                document.getElementById("inputAlamat").disabled = true;
+                                var kabupaten = document.getElementById("myKabupaten").value;
+                                let dropdown = $('#myKecamatan');
+
+                                dropdown.empty();
+                                
+                                dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+                                dropdown.prop('selectedIndex', 0);
+                                $.getJSON('http://kansnfbs.com/controller/user/getData.php?kabupaten='+kabupaten, function (data) {
+                                  $.each(data, function (key, entry) {
+                                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                                  })
+                                });
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  <div id="divKecamatan" class="form-group">
+                    <label for="inputAlamat" class="col-sm-2 control-label">Kecamatan</label>
+
+                    <div class="col-sm-10">
+                        <select id="myKecamatan" onchange="myKecamatanS()" class="form-control select2" placeholder="Provinsi" name="inputKecamatan" style="width: 100%;">
+                            <option selected="selected"><?php echo $kota; ?></option>
+                            
+                      </select>
+                      <script>
+                            function myKecamatanS() {
+                                document.getElementById("divKecamatan").style.display = "block";
+                                document.getElementById("inputAlamat").disabled = false;
+                            }
+                        </script>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="inputAlamat" class="col-sm-2 control-label">Detail Alamat</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputAlamat" name="inputAlamat" placeholder="Detail Alamat (Nama Jalan, Nomor Rumah)"  value= "<?php echo $alamat; ?>" >
                     </div>
                   </div>
                   <div class="form-group">
@@ -315,7 +516,7 @@ include '../../controller/user/profile.php';
                 </form>
               </div>
               <div class="tab-pane" id="tab_4">
-                <form class="form-horizontal" method="POST" action="../../controller/admin/editMediaSosial.php">
+                <form class="form-horizontal" method="POST" action="../../controller/user/editMediaSosial.php">
                   <div class="form-group">
                     <div class="col-sm-10">
                      <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
@@ -351,9 +552,16 @@ include '../../controller/user/profile.php';
                   </div>
                   <div class="form-group">
                     <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
-
+                        <?php
+                            if ($whatsapp != ""){
+                                $hp = $whatsapp;
+                            }
+                            else{
+                                $hp = $noHP;
+                            }
+                        ?>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $noHP; ?>>
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" value=<?php echo $hp; ?>>
                     </div>
                   </div>
                   <div class="form-group">
@@ -370,34 +578,7 @@ include '../../controller/user/profile.php';
                   </div>
                 </form>
               </div>
-             <div class="tab-pane" id="tab_5">
-                <form class="form-horizontal" method="POST" action="../../controller/user/editSettings.php">
-                  <div class="form-group">
-                    <div class="col-sm-10">
-                     <input type="hidden" class="form-control" name="inputEmail" value=<?php echo $email; ?> >
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputPassword" placeholder="Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputReTypePassword" class="col-sm-2 control-label">ReType Password</label>
-
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" name="inputReTypePassword" placeholder="ReType Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger" onclick='return checkInput()'>Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+          
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->

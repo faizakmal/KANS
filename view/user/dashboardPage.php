@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['name'])){
   <title>KANS NFBS | Dashboard</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <?php 
+   <?php
     include "../../dist/user/style.php";
   ?>
 </head>
@@ -61,7 +61,8 @@ if (!isset($_SESSION['name'])){
         <li><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -95,7 +96,7 @@ if (!isset($_SESSION['name'])){
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-    <?php 
+    <?php
     include "../../dist/admin/js.php"
   ?>
 </body>

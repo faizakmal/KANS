@@ -1,9 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 include '../../controller/user/detail.php';
+include '../../database/connect.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,9 +14,64 @@ include '../../controller/user/detail.php';
   <title>KANS NFBS | Cari Alumni</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <?php 
+   <?php
     include "../../dist/admin/style.php"
   ?>
+   <script type="text/javascript">
+    $( document ).ready(function() {
+        var tempProvinsi = "<?php echo $provinsi?>";
+        var tempKabupaten = "<?php echo $kabupaten?>";
+        var tempKecamatan = "<?php echo $kecamatan?>";
+        var temp = "Provinsi : "+tempProvinsi+" Kabupaten: "+tempKabupaten+" Kecamatan: "+tempKecamatan;
+        console.log("wtf");
+        if(tempProvinsi != ""){
+            
+            document.getElementById("divKabupaten").style.display = "block";
+            
+            let dropdown = $('#myKabupaten');
+            var picked = 0;
+            dropdown.empty();
+                                    
+            dropdown.append('<option selected="true" disabled>Pilih Kabupaten/Kota</option>');
+            
+            $.getJSON('http://kansnfbs.com/view/user/getData.php?province='+tempProvinsi, function (data) {
+                $.each(data, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                    if(tempKabupaten == entry.ID) picked = key;
+                })
+                dropdown.prop('selectedIndex', picked+1);
+            });
+            
+            if(tempKabupaten != ""){
+                
+                document.getElementById("divKecamatan").style.display = "block";
+                
+                let dropdown = $('#myKecamatan');
+                var picked = 0;
+                dropdown.empty();
+                                        
+                dropdown.append('<option selected="true" disabled>Pilih Kecamatan</option>');
+                
+                $.getJSON('http://kansnfbs.com/view/user/getData.php?kabupaten='+tempKabupaten, function (data) {
+                    $.each(data, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.ID).text(entry.NAME));
+                        if(tempKecamatan == entry.ID) picked = key;
+                    })
+                    dropdown.prop('selectedIndex', picked+1);
+                });
+                if(tempKecamatan != ""){
+                    
+                    document.getElementById("inputAlamat").disabled = false;
+                }else document.getElementById("inputAlamat").disabled = true;
+            }else document.getElementById("divKecamatan").style.display = "none";
+        }else{
+            
+            document.getElementById("divKabupaten").style.display = "none";
+            document.getElementById("divKecamatan").style.display = "none";
+            document.getElementById("inputAlamat").disabled = true;
+        }
+    });
+  </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -62,7 +118,8 @@ include '../../controller/user/detail.php';
         <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -114,9 +171,9 @@ include '../../controller/user/detail.php';
 
               <strong><i class="fa fa-phone margin-r-5"></i>No HP</strong>
               <p class="text-muted"><?php echo $noHP; ?></p>
-               
+
               <hr>
-              
+
               <strong><i class="fa fa-book margin-r-5"></i>Pendidikan</strong>
               <p class="text-muted"><?php echo $jurusan; ?>, <?php echo $universitas; ?></p>
             </div>
@@ -128,7 +185,7 @@ include '../../controller/user/detail.php';
            <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                <li class="active"><a href="#tab_1" data-toggle="tab">Data Diri</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Pendidikan</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Pendidikan Terakhir</a></li>
               <li><a href="#tab_3" data-toggle="tab">Pekerjaan</a></li>
               <li><a href="#tab_4" data-toggle="tab">Media Sosial</a></li>
             </ul>
@@ -140,6 +197,7 @@ include '../../controller/user/detail.php';
                       <input type="hidden" class="form-control" name="inputEmail" disabled value= "<?php echo $email; ?>" >
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="inputNama" class="col-sm-2 control-label">Nama Lengkap</label>
 
@@ -147,8 +205,38 @@ include '../../controller/user/detail.php';
                       <input type="text" class="form-control" name="inputNama" placeholder="Nama Lengkap" disabled value= "<?php echo $name; ?>" >
                     </div>
                   </div>
+
                   <div class="form-group">
-                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat</label>
+                    <label for="inputNama" class="col-sm-2 control-label">Nama Panggilan</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputNamaPanggilan" placeholder="Nama Panggilan" disabled value= "<?php echo $namapanggilan; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tempat Lahir</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="inputTempatLahir" disabled placeholder="Tempat Lahir"  value= "<?php echo $tempatlahir; ?>" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTempatLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
+
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" disabled class="form-control pull-right" name="datepicker" value="<?php echo $tanggallahir; ?>">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputAlamat" class="col-sm-2 control-label">Alamat Sekarang</label>
 
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputAlamat" placeholder="Alamat Lengkap"  disabled value= "<?php echo $alamat; ?>" >
@@ -219,7 +307,7 @@ include '../../controller/user/detail.php';
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="inputJurusan" placeholder="Jurusan" disabled value= "<?php echo $jurusan; ?>" >
                     </div>
-                  </div> 
+                  </div>
                   <div class="form-group">
                     <label for="inputTahunMasuk" class="col-sm-2 control-label">Tahun Masuk</label>
 
@@ -251,7 +339,7 @@ include '../../controller/user/detail.php';
                       <input type="text" class="form-control" name="inputNamaPerusahaan" placeholder="Nama Perusahaan" disabled value="<?php echo $namaPerusahaan; ?>">
                     </div>
                   </div>
-                 
+
                    <div class="form-group">
                     <label for="inputDivisiPerusahaan" class="col-sm-2 control-label">Divisi Perusahaan</label>
 
@@ -308,9 +396,16 @@ include '../../controller/user/detail.php';
                   </div>
                   <div class="form-group">
                     <label for="inputWhatsapp" class="col-sm-2 control-label">WhatsApp</label>
-
+                         <?php
+                            if ($whatsapp != ""){
+                                $hp = $whatsapp;
+                            }
+                            else{
+                                $hp = $noHP;
+                            }
+                        ?>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" disabled value=<?php echo $noHP; ?>>
+                      <input type="text" class="form-control" name="inputWhatsapp" placeholder="Nomor WhatsApp" disabled value=<?php echo $hp; ?>>
                     </div>
                   </div>
                   <div class="form-group">
@@ -333,7 +428,7 @@ include '../../controller/user/detail.php';
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
-  <?php 
+  <?php
     include "../../dist/admin/js.php"
   ?>
 </body>

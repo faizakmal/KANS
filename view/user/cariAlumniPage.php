@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['name'])){
-    header('Location:../../index.html');
+    header('Location:../../index.php');
   }
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['name'])){
   <title>KANS NFBS | Cari Alumni</title>
   <link href='../../dist/img/icon.png' rel='shortcut icon'>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- <?php 
+ <?php
     include "../../dist/user/style.php"
   ?>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -60,7 +60,8 @@ if (!isset($_SESSION['name'])){
         <li class="active"><a href="cariAlumniPage.php"><i class="fa fa-search"></i> <span>Cari Alumni</span></a></li>
         <li><a href="profilePage.php"><i class="fa fa-book"></i> <span>Profile</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="../../controller/logout.php" onclick='return checkLogout()'><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-circle-o text-green"></i> <span>Home</span></a></li>
+        <li><a href="../../controller/logout.php"><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
       </ul>
     </section>
   </aside>
@@ -75,17 +76,10 @@ if (!isset($_SESSION['name'])){
     <section class="content">
          <div class="box">
            <div class="box-header with-border">
-          <h3 class="box-title">Daftar Alumni</h3>
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
+          <h3 class="box-title">Alumni-Alumni KANS NFBS</h3>
         </div>
         <div class="box-body">
-          <div class="table-responsive">    
+          <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped" >
                 <thead>
                 <tr>
@@ -112,7 +106,7 @@ if (!isset($_SESSION['name'])){
   <footer class="main-footer">
     <strong>Copyright © KANS NFBS 2018 </strong>
   </footer>
- <?php 
+ <?php
     include "../../dist/admin/js.php"
   ?>
 </body>

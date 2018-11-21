@@ -23,4 +23,4 @@ else {
 	echo "<script>alert('Data Tidak Tersimpan'); window.location.href='../../view/user/profilePage.php'</script>";
 }*/
 mysqli_query($conn, $sql);
-header("Location: ../../view/user/profilePage.php");
+header("Location: ../../view/user/profilePage.php?sukses=1");

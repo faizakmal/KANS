@@ -49,7 +49,7 @@ body, html {
     }
 }
 
-#container {
+#containermap {
     height: 500px; 
     min-width: 310px; 
     max-width: 800px; 

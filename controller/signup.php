@@ -34,8 +34,9 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 			}else{
 				//hashing password
 				if($password==$rePassword){
+				    $status = "Tidak Aktif";
 					$pass = md5($password); // password encrypt					
-					
+					$kode   = md5(uniqid(rand()));
 					$nopic = '../dist/userpicture/defaultpic/silueta.png';
 					$picforuser = '../dist/userpicture/'.$email.'.png'; 
 					$emailpic = $email.".png";
@@ -52,6 +53,7 @@ if(empty($nama)||empty($angkatan)||empty($email)||empty($password)){
 					mysqli_query($conn, $sql2);
 					mysqli_query($conn, $sql3);
 					mysqli_query($conn, $sql4);
+					
 					//sucess add to database
 					echo "<script>alert('Account Created'); window.location.href='../index.php'</script>";
 					exit();
